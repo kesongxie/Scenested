@@ -12,7 +12,7 @@ class PostCommentTableViewCell: UITableViewCell {
 
     @IBOutlet weak var commentUserImageView: UIImageView!{
         didSet{
-            commentUserImageView.layer.cornerRadius = commentUserImageView.frame.size.width / 2
+            commentUserImageView.layer.cornerRadius = 22
             commentUserImageView.clipsToBounds = true
         }
     }

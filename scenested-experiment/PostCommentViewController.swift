@@ -38,7 +38,7 @@ class PostCommentViewController: UIViewController {
  
     var post: Post?
     
-    var postComments: [PostComment]?
+//    var postComments: [PostComment]?
     
     
     var backBtn: UIBarButtonItem?{
@@ -83,6 +83,8 @@ class PostCommentViewController: UIViewController {
         self.tableView.estimatedRowHeight = self.tableView.rowHeight
         self.tableView.rowHeight = UITableViewAutomaticDimension
         
+        
+        showDefaultViewWithOption(.Loading)
         loadComment()
 
         backBtn = UIBarButtonItem()
@@ -97,12 +99,6 @@ class PostCommentViewController: UIViewController {
         
         
     }
-    
-//    override func viewWillDisappear(animated: Bool) {
-//        super.viewWillDisappear(animated)
-//         self.tabBarController?.tabBar.hidden = false
-//    }
-    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -120,58 +116,82 @@ class PostCommentViewController: UIViewController {
 
     //if indexPathSetToload is not nil, then insert with animation for only the indexPath provided
     func loadComment(indexPathSetToload: [NSIndexPath]? = nil){
-        startFetchingUserInfo(indexPathSetToload, completionHandler:{
-            self.userFetchingCompleted = true
-            self.activityIndicator.stopAnimating()
-            let commentCount = self.post!.postComments?.count ?? 0
-            if commentCount < 1{
-                self.defaultMessageView.hidden = false
-            }else{
-                self.defaultMessageView.hidden = true
-                self.defaultScrollView.hidden = true
-            }
-            if indexPathSetToload == nil{
-                self.tableView.reloadData()
-            }else{
-                self.title = "Comments"
-                self.tableView.insertRowsAtIndexPaths(indexPathSetToload!, withRowAnimation: .Automatic)
-            }
-        })
-    }
-    
-    
-    func startFetchingUserInfo(indexPathSetToload: [NSIndexPath]?,completionHandler: () -> Void){
-        if postComments != nil{
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { //don't block the main thread
-                let loadingGroup = dispatch_group_create()
-                //load the comment user
-                for postComment in self.postComments!{
-                    dispatch_group_enter(loadingGroup)
-                    postComment.commentUser = User(id: postComment.commentUserId!, completionHandler: {
-                        (succeed, info) in
-                        //load tagged user
-                        if postComment.mentionedUserIdList != nil{
-                                postComment.mentionedUserList = [User]()
-                            for mentionedUserId in postComment.mentionedUserIdList!{
-                                dispatch_group_enter(loadingGroup)
-                                postComment.mentionedUserList!.append(User(id: mentionedUserId, completionHandler: {
-                                    (succeed, info) in
-                                    dispatch_group_leave(loadingGroup)
-                                })!)
-                            }
-                        }
-                        dispatch_group_leave(loadingGroup)
-                    })
+        if indexPathSetToload == nil{
+            //reload all the comment for the post
+            self.post?.fetchPostCommentInfo({
+                (commments, error) in
+                let commentCount = self.post?.postComments?.count == nil ? 0 : self.post!.postComments!.count
+                self.userFetchingCompleted = true
+                if commentCount > 0{
+                    self.hideDefaultView()
+                    self.tableView.reloadData()
+                }else{
+                    self.showDefaultViewWithOption(.NoContentMessage)
                 }
-                dispatch_group_wait(loadingGroup, DISPATCH_TIME_FOREVER)
-                dispatch_async(dispatch_get_main_queue(), {
-                    completionHandler()
-                })
             })
         }else{
-            completionHandler()
+            self.hideDefaultView()
+            self.tableView.insertRowsAtIndexPaths(indexPathSetToload!, withRowAnimation: .Automatic)
         }
     }
+    
+    
+    
+    func showDefaultViewWithOption(option: DefaultViewOpenOption){
+        self.defaultScrollView.hidden = false
+        self.defaultScrollView.frame.size = self.getVisibleContentRectSize()
+        switch option{
+        case .Loading:
+            //show the loading view
+            self.activityIndicator.startAnimating()
+            self.defaultMessageView.hidden = true
+        case .NoContentMessage:
+            self.activityIndicator.stopAnimating()
+            self.defaultMessageView.hidden = false
+        }
+    }
+    
+    func hideDefaultView(){
+        self.defaultScrollView.hidden = true
+    }
+    
+
+    
+    
+    
+//    
+//    func startFetchingUserInfo(indexPathSetToload: [NSIndexPath]?,completionHandler: () -> Void){
+//        if postComments != nil{
+//            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), { //don't block the main thread
+//                let loadingGroup = dispatch_group_create()
+//                //load the comment user
+//                for postComment in self.postComments!{
+//                    dispatch_group_enter(loadingGroup)
+//                    postComment.commentUser = User(id: postComment.commentUserId!, completionHandler: {
+//                        (succeed, info) in
+//                        //load tagged user
+//                        if postComment.mentionedUserIdList != nil{
+//                                postComment.mentionedUserList = [User]()
+//                            for mentionedUserId in postComment.mentionedUserIdList!{
+//                                dispatch_group_enter(loadingGroup)
+//                                postComment.mentionedUserList!.append(User(id: mentionedUserId, completionHandler: {
+//                                    (succeed, info) in
+//                                    dispatch_group_leave(loadingGroup)
+//                                })!)
+//                            }
+//                        }
+//                        dispatch_group_leave(loadingGroup)
+//                    })
+//                }
+//                dispatch_group_wait(loadingGroup, DISPATCH_TIME_FOREVER)
+//                dispatch_async(dispatch_get_main_queue(), {
+//                    completionHandler()
+//                })
+//            })
+//        }else{
+//            completionHandler()
+//        }
+//    }
     
     func keyboardDidShow(notification: NSNotification){
         isUIAdjustingWhileKeyBoardShows = true
@@ -245,9 +265,10 @@ class PostCommentViewController: UIViewController {
         if let commentTextView = notification.userInfo!["textView"] as? UITextView{
             if let commentCell = commentTextView.superview?.superview as? PostCommentTableViewCell{
                 if let indexPath = self.tableView.indexPathForCell(commentCell){
-                    let interactingComment = self.postComments![indexPath.row]
-                    if interactingComment.commentUserId != getLoggedInUser()?.id{
-                        reactWhenCommentTapped(indexPath)
+                    if let interactingComment = self.post?.postComments![indexPath.row]{
+                        if interactingComment.commentUser.id != getLoggedInUser()?.id{
+                            reactWhenCommentTapped(indexPath)
+                        }
                     }
                 }
             }
@@ -276,7 +297,7 @@ class PostCommentViewController: UIViewController {
         if let textview = commentTextView{
             if let commentCell = textview.superview?.superview as? PostCommentTableViewCell{
                 if let indexPath = self.tableView.indexPathForCell(commentCell){
-                    return self.postComments![indexPath.row]
+                    return self.post?.postComments![indexPath.row]
                 }
             }
         }
@@ -299,11 +320,13 @@ class PostCommentViewController: UIViewController {
         if self.presentedViewController == nil{
             if let commentCell = gesture.view as? PostCommentTableViewCell{
                 if let indexPath = self.tableView.indexPathForCell(commentCell){
-                    let interactingComment = self.postComments![indexPath.row]
+                    guard let interactingComment = self.post?.postComments![indexPath.row] else{
+                        return
+                    }
                     guard let loggedInUserId = getLoggedInUser()?.id else{
                         return
                     }
-                    if interactingComment.commentUserId == loggedInUserId || post!.feature.user.id == loggedInUserId{
+                    if interactingComment.commentUser.id == loggedInUserId || post!.feature.user.id == loggedInUserId{
                         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
                         let deleteAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
                             alertAction in
@@ -314,7 +337,6 @@ class PostCommentViewController: UIViewController {
                                 if deletedSucceed{
                                     self.title = "Comments"
                                     self.post?.postComments?.removeAtIndex(indexPath.row)
-                                    self.postComments = self.post?.postComments
                                     self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
                                     let commentCount = self.post!.postComments?.count ?? 0
                                     
@@ -344,8 +366,9 @@ class PostCommentViewController: UIViewController {
     
     func reactWhenCommentTapped(indexPath: NSIndexPath){
         self.commentTextField.becomeFirstResponder()
-        let interactingComment = self.postComments![indexPath.row]
-        self.commentText = "@" + interactingComment.commentUser.username! + " "
+        if let interactingComment = self.post?.postComments![indexPath.row]{
+            self.commentText = "@" + interactingComment.commentUser.username! + " "
+        }
         
     }
 }
@@ -358,12 +381,13 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return  userFetchingCompleted ? (postComments?.count ?? 0) : 0
+        let commentCount = post?.postComments?.count == nil ? 0 : post!.postComments!.count
+        return  userFetchingCompleted ? commentCount : 0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(reuseIden) as! PostCommentTableViewCell
-        cell.comment = postComments![indexPath.row]
+        cell.comment = post?.postComments![indexPath.row]
         cell.commentUserImageView.userInteractionEnabled = true
         //tap gesture for avator
         let tapGestureForAvator = UITapGestureRecognizer(target: self, action: #selector(self.navigateToProfile))
@@ -375,8 +399,8 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
         cell.addGestureRecognizer(longPressedGestureForCell)
         
         //tap gesture for cell and it's only for other user's comment
-        let interactingComment = self.postComments![indexPath.row]
-        if interactingComment.commentUserId != getLoggedInUser()?.id{
+        let interactingComment = self.post?.postComments![indexPath.row]
+        if interactingComment?.commentUser.id != getLoggedInUser()?.id{
             let tapGestureForCell = UITapGestureRecognizer(target: self, action: #selector(self.commentCellTapped))
             cell.addGestureRecognizer(tapGestureForCell)
         }
@@ -391,7 +415,7 @@ extension PostCommentViewController: UITextFieldDelegate{
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        self.title = "Posting..."
+        self.navigationItem.title = "Posting..."
         let text = self.commentText!
         self.commentText = ""
         
@@ -401,7 +425,7 @@ extension PostCommentViewController: UITextFieldDelegate{
         getLoggedInUser()?.commentPost(text, post: post!, completionHandler: {
             (comment) in
             if comment != nil && self.respondingPostCell != nil{
-                self.postComments = self.post?.postComments
+                self.navigationItem.title = "Comments"
                 let commentIndexPath = NSIndexPath(forItem: 0, inSection: 0)
                 let indexPathSetToLoad = [commentIndexPath]
                 self.loadComment(indexPathSetToLoad)

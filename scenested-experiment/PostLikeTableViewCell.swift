@@ -13,7 +13,7 @@ class PostLikeTableViewCell: UITableViewCell {
     
     @IBOutlet weak var likeUserAvatorImageView: UIImageView!{
         didSet{
-            likeUserAvatorImageView.layer.cornerRadius = likeUserAvatorImageView.frame.size.width / 2
+            likeUserAvatorImageView.layer.cornerRadius = 22.0
             likeUserAvatorImageView.clipsToBounds = true
         }
     }

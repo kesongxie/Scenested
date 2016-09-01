@@ -129,7 +129,6 @@ class PostTableViewCell: UITableViewCell {
     
     func updateLikeCountUI(){
         let likeCount =  post?.postLikeCount ?? 0
-        print(likeCount)
         if likeCount < 1{
             self.postLikeCountLabel.text = ""
         }else{

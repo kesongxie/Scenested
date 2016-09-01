@@ -280,15 +280,12 @@ class User{
             if let additionalTextualInfo = featureInfo[User.AddFeatureTextualInfoKey] as? [String: AnyObject]{
                 textualInfo.addDictionaryToCurrent(additionalTextualInfo)
             }
-            print("good")
             HttpRequest.uploadImagesWithUserInfo(User.AddFeaturePath ,images: images, param: textualInfo, completionHandler: {
                 (response, error) in
                 dispatch_async(dispatch_get_main_queue(), {
-                    print(response)
                     if error == nil && response != nil{
                         if let errorCode = response!["errorCode"] as? Int {
                             if errorCode == 0{
-                                print("food")
                                 if let featureInfo = response!["feature"] as? [String: AnyObject]{
                                     var featureInfo = featureInfo
                                     featureInfo["user"] = self
@@ -443,19 +440,13 @@ class User{
                 if likeDeletedId > 0{
                     if let indexInUserOwnLikes = self.postLikes?.indexOf(postLike!){
                         self.postLikes?.removeAtIndex(indexInUserOwnLikes)
-                       /* if let indexInPostLikes = post.postLikes?.indexOf(postLike!){
-                            post.postLikes?.removeAtIndex(indexInPostLikes)
-                        }*/
                         post.postLikeCount -= 1
                         completionHandler(nil)
                     }
                 }
             }else if let likeAddedInfo = response as? [String: AnyObject]{
                 let postLikeId = likeAddedInfo["post_like_id"] as! Int
-                let postLikeTime = likeAddedInfo["like_time"] as! String
-                let likeUserId = likeAddedInfo["liked_user_id"] as! Int
-                let postLike = PostLike(postLikeId: postLikeId , likeTime: postLikeTime, likeUserId: likeUserId, post: post)
-                postLike.postId = post.id
+                let postLike = PostLike(postLikedId: postLikeId, postId: post.id)
                 
                 if self.postLikes != nil{
                     self.postLikes!.insert(postLike, atIndex: 0)
@@ -463,17 +454,12 @@ class User{
                 }else{
                     self.postLikes = [postLike]
                 }
-                
-                if post.postLikes != nil{
-                    post.postLikes!.insert(postLike, atIndex: 0)
-                }else{
-                    post.postLikes = [postLike]
-                }
                 post.postLikeCount += 1
                 completionHandler(postLike)
             }
         })
     }
+    
     
     internal func commentPost(text: String, post: Post, completionHandler: (PostComment?) -> Void){
         guard !text.isEmpty else{
@@ -488,74 +474,22 @@ class User{
             "commentInfo": ["postId": postId, "comment_user_id": commentUserId, "text": text]
         ]
         
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-           let loadingGroup = dispatch_group_create()
-            dispatch_group_enter(loadingGroup)
-            var addedComment: PostComment?
-            HttpRequest.sendRequest(User.CommentPostPath, method: .GET, param: param, completionHandler: {
-                (response, error) in
-                    if error == nil && response != nil{
-                        if var commentInfo = response as? [String: AnyObject]{
-                            commentInfo["post"] = post
-                            let postComment = PostComment(commentInfo: commentInfo)
-                            if postComment.mentionedUserIdList != nil{
-                                postComment.mentionedUserList = [User]()
-                                for mentionedUserId in postComment.mentionedUserIdList!{
-                                    dispatch_group_enter(loadingGroup)
-                                    postComment.mentionedUserList!.append(User(id: mentionedUserId, completionHandler: {
-                                        (succeed, info) in
-                                        dispatch_group_leave(loadingGroup)
-                                    })!)
-                                }
-                            }
-                            addedComment = postComment
-                            if post.postComments != nil{
-                                post.postComments?.insert(addedComment!, atIndex: 0)
-                            }else{
-                                post.postComments = [addedComment!]
-                            }
-                        }
+        HttpRequest.sendRequest(User.CommentPostPath, method: .GET, param: param, completionHandler: {
+            (response, error) in
+            if error == nil && response != nil{
+                if var commentInfo = response as? [String: AnyObject]{
+                    commentInfo["post"] = post
+                    let postComment = PostComment(commentInfo: commentInfo)
+                    if post.postComments != nil{
+                        post.postComments?.insert(postComment, atIndex: 0)
+                    }else{
+                        post.postComments = [postComment]
                     }
-                    dispatch_group_leave(loadingGroup)
-            })
-            dispatch_group_wait(loadingGroup, DISPATCH_TIME_FOREVER)
-            dispatch_async(dispatch_get_main_queue(), {
-                completionHandler(addedComment)
-            })
+                    completionHandler(postComment)
+                }
+            }
         })
     }
- 
-    
-//    
-//    internal func commentPost(text: String, post: Post, completionHandler: (PostComment?) -> Void){
-//        guard !text.isEmpty else{
-//            return
-//        }
-//        
-//        let postId = post.id
-//        guard let commentUserId = self.id else{
-//            return
-//        }
-//        let param: [String: AnyObject] = [
-//            "commentInfo": ["postId": postId, "comment_user_id": commentUserId, "text": text]
-//        ]
-//        
-//        HttpRequest.sendRequest(User.CommentPostPath, method: .GET, param: param, completionHandler: {
-//            (response, error) in
-//            if error == nil && response != nil{
-//                if var commentInfo = response as? [String: AnyObject]{
-//                    commentInfo["post"] = post
-//                    let postComment = PostComment(commentInfo: commentInfo)
-//                    if post.postComments != nil{
-//                        post.postComments?.insert(postComment, atIndex: 0)
-//                    }else{
-//                        post.postComments = [postComment]
-//                    }
-//                    completionHandler(postComment)
-//                }
-//            }
-//        })
-//    }
 
     
 

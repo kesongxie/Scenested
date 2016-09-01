@@ -94,43 +94,13 @@ class Feature{
                     }
                     self.post!.append([Post]())
                     self.currentNumberOfLoadedSection += 1
-                    
                     for postInfo in posts{
                         var postInfo = postInfo
                         postInfo["feature"] = self
                         let post = Post(postInfo: postInfo)
-                        
-//                        //load post like
-//                        let multiplePostLikeInfo = postInfo["post_like"] as! [[String: AnyObject]]
-//                        var postLikes: [PostLike]?
-//                        if multiplePostLikeInfo.count > 0{
-//                            postLikes = [PostLike]()
-//                            for likeInfo in multiplePostLikeInfo{
-//                                var likeInfo = likeInfo
-//                                likeInfo["post"] = post
-//                                let postLike = PostLike(likeInfo: likeInfo)
-//                                postLikes?.append(postLike)
-//                            }
-//                        }
-//                        post.postLikes = postLikes
-//                        //load post comment
-//                        let multiplePostCommentInfo = postInfo["post_comment"] as! [[String: AnyObject]]
-//                        
-//                        var postComments: [PostComment]?
-//                        if multiplePostCommentInfo.count > 0{
-//                            postComments = [PostComment]()
-//                            for commentInfo in multiplePostCommentInfo{
-//                                var commentInfo = commentInfo
-//                                commentInfo["post"] = post
-//                                let comment = PostComment(commentInfo: commentInfo)
-//                                postComments?.append(comment)
-//                            }
-//                        }
-//                        post.postComments = postComments
-                        self.post![self.currentNumberOfLoadedSection].append(post) //append new loaded post to a specific section
+                         self.post![self.currentNumberOfLoadedSection].append(post) //append new loaded post to a specific section
                         self.currentLoadedPostCount += 1
                     }
-
                 }
             }
             if completionHandler != nil{

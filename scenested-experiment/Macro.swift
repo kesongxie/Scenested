@@ -48,6 +48,12 @@ enum CacheType{
     case CacheForProfileCover
 }
 
+enum DefaultViewOpenOption{
+    case Loading
+    case NoContentMessage
+}
+
+
 
 func getAspectRatioFromSize(size: CGSize) -> CGFloat{
     return size.width / size.height

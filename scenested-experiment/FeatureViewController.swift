@@ -19,7 +19,6 @@ class FeatureViewController: UITableViewController{
 
     @IBAction func refresh(sender: UIRefreshControl) {
         self.isFetchingPost = true
-        print(self.tableView.contentOffset)
         self.feature?.refreshPost(numberOfPostPerFecthingRequest, completionHandler: {
             lastRowPostId in
             self.feature!.lastLoadedPostId = lastRowPostId
@@ -28,7 +27,7 @@ class FeatureViewController: UITableViewController{
             self.tableView.reloadData()
             self.isFetchingPost = false
             if lastRowPostId == nil{
-                self.showDefaultViewWithOption(.NoPostMessage)
+                self.showDefaultViewWithOption(.NoContentMessage)
             }else{
                 self.hideDefaultView()
             }
@@ -56,13 +55,7 @@ class FeatureViewController: UITableViewController{
     @IBOutlet weak var bottomActivityIndicator: UIActivityIndicatorView!
     
     
-    
     private let adjustScrollViewOffSetForLoadMorePost: CGFloat = 400 //when the scroll bar is less than 200, load more post
-
-    enum DefaultViewOpenOption{
-        case Loading
-        case NoPostMessage
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,13 +78,13 @@ class FeatureViewController: UITableViewController{
                     self.isFetchingPost = false
                 })
             }else{
-                showDefaultViewWithOption(.NoPostMessage)
+                showDefaultViewWithOption(.NoContentMessage)
             }
         }else{
             //already load
             if self.feature!.postCount < 1 {
                 //show default message view
-                showDefaultViewWithOption(.NoPostMessage)
+                showDefaultViewWithOption(.NoContentMessage)
             }else{
                 //hide fault message view
                 hideDefaultView()
@@ -194,7 +187,7 @@ class FeatureViewController: UITableViewController{
             //show the loading view
             self.activityIndicator.startAnimating()
             self.defaultMessageView.hidden = true
-        case .NoPostMessage:
+        case .NoContentMessage:
             self.activityIndicator.stopAnimating()
             self.defaultMessageView.hidden = false
         }
@@ -227,7 +220,7 @@ class FeatureViewController: UITableViewController{
                                 self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                                 if let postCount = self.feature?.postCount{
                                     if postCount < 1{
-                                        self.showDefaultViewWithOption(.NoPostMessage)
+                                        self.showDefaultViewWithOption(.NoContentMessage)
                                     }
                                 }
                             }
@@ -272,7 +265,7 @@ class FeatureViewController: UITableViewController{
         if let postCell = gesture.view?.superview?.superview as? PostTableViewCell{
             if let postLikeTableVC = storyboard?.instantiateViewControllerWithIdentifier(StoryboardIden.PostLikeTableViewControllerIden) as? PostLikeTableViewController{
                 postLikeTableVC.post = postCell.post
-                postLikeTableVC.postLikes = postCell.post!.postLikes
+//                postLikeTableVC.postLikes = postCell.post!.postLikes
                 self.navigationController?.pushViewController(postLikeTableVC, animated: true)
             }
         }
@@ -303,9 +296,7 @@ class FeatureViewController: UITableViewController{
             if let postCommentNVC = storyboard?.instantiateViewControllerWithIdentifier(StoryboardIden.PostCommentNavigationControllerIden) as? PostCommentNavigationController{
                 if let postCommentVC = postCommentNVC.viewControllers.first as? PostCommentViewController{
                     postCommentVC.post = postCell.post
-                    postCommentVC.postComments = postCell.post!.postComments
                     postCommentVC.respondingPostCell = postCell
-
                     // postCommentVC.hidesBottomBarWhenPushed = true
                     self.navigationController?.pushViewController(postCommentVC, animated: true)
                 }

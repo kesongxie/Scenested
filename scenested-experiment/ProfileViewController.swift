@@ -37,6 +37,20 @@ class ProfileViewController: EditableProfileViewController {
         }
     }
     
+    @IBAction func profileBelowBtnTriggered(sender: UIButton) {
+        if isLoggedInUserProfile{
+            //present edit profile
+            if let editProfileNVC = storyboard?.instantiateViewControllerWithIdentifier("EditProfileNaviIden") as? EditProfileNavigationController{
+                if let editProfileVC = editProfileNVC.viewControllers.first as? EditProfileViewController{
+                    editProfileVC.profileCoverImage = self.profileCover.image
+                    editProfileVC.profileAvatorImage = self.profileAvator.image
+                    editProfileVC.fullNameText = self.profileFullName.text
+                    editProfileVC.bioText = self.profileBioTextView.text
+                    self.presentViewController(editProfileNVC, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     
     @IBOutlet weak var featuresCollectionView: UICollectionView!
     
@@ -57,18 +71,9 @@ class ProfileViewController: EditableProfileViewController {
     
     @IBAction func cancelComposePost(unwindSegue: UIStoryboardSegue){}
     
-    private var profileCoverHeight: CGFloat = 0
-    private var headerHeightOffset: CGFloat = 0 // make the cover's height little bit larger than the original screen height
-    private var profileCoverOriginalScreenHeight: CGFloat = 0
-    
     private var featureImageSize: CGSize = CGSizeZero //the size of the individual feature UIImageView
     
-    private let sectionHeaderHeight:CGFloat = 46
-    
-    private let initialContentOffsetTop: CGFloat = 64.0
-    
-    
-    /* define the style constant for the feature slide  */
+    // MARK: feature slide style constant
     private struct featureSlideConstant{
         struct sectionEdgeInset{
             static let top:CGFloat = 0
@@ -94,35 +99,17 @@ class ProfileViewController: EditableProfileViewController {
     
     private var minTableHeaderHeight:CGFloat = 0
     
-    
     //true if the current profile belongs to the logged in user
     private var isLoggedInUserProfile = false
+    
+    private var bioMentionedUserList: [User]?
     
     var profileUser: User?{
         didSet{
             isLoggedInUserProfile = (profileUser!.id == getLoggedInUser()!.id)
         }
     }
-    
-    private var bioMentionedUserList: [User]?
-    
- 
-    @IBAction func profileBelowBtnTriggered(sender: UIButton) {
-        if isLoggedInUserProfile{
-            //present edit profile
-            if let editProfileNVC = storyboard?.instantiateViewControllerWithIdentifier("EditProfileNaviIden") as? EditProfileNavigationController{
-                if let editProfileVC = editProfileNVC.viewControllers.first as? EditProfileViewController{
-                    editProfileVC.profileCoverImage = self.profileCover.image
-                    editProfileVC.profileAvatorImage = self.profileAvator.image
-                    editProfileVC.fullNameText = self.profileFullName.text
-                    editProfileVC.bioText = self.profileBioTextView.text
-                    self.presentViewController(editProfileNVC, animated: true, completion: nil)
-                }
-            }
-        }
-    }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadUserData()
@@ -142,6 +129,7 @@ class ProfileViewController: EditableProfileViewController {
        //additional setup
     override func viewDidLayoutSubviews() {
         //make sure the header view contans the exact necessary height given it's dynamic content
+        updateCover()
         setupfeatureSlideCollectionView()
     }
     
@@ -152,10 +140,12 @@ class ProfileViewController: EditableProfileViewController {
         self.globalScrollView = globalView
         self.coverImageView = profileCover
         self.coverHeight = profileCover.bounds.size.height
-        self.defaultInitialContentOffsetTop = initialContentOffsetTop
         self.stretchWhenContentOffsetLessThanZero = true
         minTableHeaderHeight = (tableHeaderView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)).height
         tableHeaderView.frame.size.height = minTableHeaderHeight//the minimum height for the tableheader view
+        
+        print(self.coverImageView?.frame)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -177,12 +167,14 @@ class ProfileViewController: EditableProfileViewController {
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.isKindOfClass(UITableView){
             //scrolling the global table View
+            print(scrollView.contentOffset.y)
             super.scrollViewDidScroll(scrollView)
             
         }else if scrollView.isKindOfClass(UICollectionView){
             //scrolling the horizontal feature slider
         }
     }
+    
     
     func loadUserData(){
          if let profileUser = profileUser{
@@ -214,6 +206,13 @@ class ProfileViewController: EditableProfileViewController {
         }
     }
     
+    
+    func updateCover(){
+        if let coverImageSize = profileCover.image?.size{
+            profileCoverHeightConstraint.constant = coverImageSize.width / ProfileCoverAspectRatio
+        }
+    }
+
     
     func setupfeatureSlideCollectionView(){
         //the size for the feature image

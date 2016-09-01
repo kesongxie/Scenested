@@ -11,24 +11,25 @@ import Foundation
 class PostLike{
     var postLikeId: Int?
     var likeTime: String?
-    var likeUserId: Int?
     var postId: Int?
     weak var post: Post?
-    var likeUser: User! //the user who liked the post, this should be load when the likeTableview loads
+    var likeUser: User!
     
     
     
+    //lazy loading, only gather necessary information for the post like
     init(postLikedId: Int, postId: Int){
         self.postLikeId = postLikedId
         self.postId = postId
     }
     
     
-    init(postLikeId: Int, likeTime: String, likeUserId: Int, post: Post){
+    init(postLikeId: Int, likeTime: String, post: Post, likeUser: User){
         self.postLikeId = postLikeId
         self.likeTime = likeTime
-        self.likeUserId = likeUserId
         self.post = post
+        self.postId = self.post?.id
+        self.likeUser = likeUser
 
     }
     
@@ -36,11 +37,14 @@ class PostLike{
     convenience init(likeInfo: [String: AnyObject]){
         let postLikeId = likeInfo["post_like_id"] as! Int
         let likeTime = likeInfo["like_time"] as! String
-        let likeUserId = likeInfo["liked_user_id"] as! Int
         let post = likeInfo["post"] as! Post
-        self.init(postLikeId: postLikeId, likeTime: likeTime,likeUserId: likeUserId, post: post)
+        //initialize the like user
+        let likeUserInfo = likeInfo["likeUserInfo"] as! [String: AnyObject]
+        let user = User(userInfo: likeUserInfo)
+        self.init(postLikeId: postLikeId, likeTime: likeTime, post: post, likeUser: user)
     }
 }
+
 
 extension PostLike: Equatable{
 }
@@ -53,6 +57,5 @@ func ==(lhs: PostLike, rhs: PostLike) -> Bool {
 func !=(lhs: PostLike, rhs: PostLike) -> Bool {
     return !(lhs == rhs)
 }
-
 
 

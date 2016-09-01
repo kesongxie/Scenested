@@ -9,6 +9,7 @@
 import Foundation
 import CoreLocation
 import CoreBluetooth
+import UIKit
 
 let APPUUID: String = "671002C3-B3A5-4639-9C42-69E868FE81B7"
 let BeaconIdentifier: String = NSBundle.mainBundle().bundleIdentifier!
@@ -16,6 +17,7 @@ let APPCLBeaconRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: APPUUID
 let AppCBUUID = CBUUID(NSUUID:  NSUUID(UUIDString: APPUUID)! )
 let UsernameMinLength:Int = 4
 let PasswordMinLength:Int = 6
+let ProfileCoverAspectRatio: CGFloat = 3.2
 
 let ServerRoot = "http://192.168.1.104:8888/iOS/"
 let HttpCallPath = ServerRoot + "User/HttpCall/"

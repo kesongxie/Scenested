@@ -18,8 +18,6 @@
 		982D5F961D1A236C00D2DB72 /* StrechableHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982D5F951D1A236C00D2DB72 /* StrechableHeaderViewController.swift */; };
 		982D5F9A1D1CBB6700D2DB72 /* CropAvatorPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982D5F991D1CBB6700D2DB72 /* CropAvatorPhotoViewController.swift */; };
 		982D5F9C1D1CC37700D2DB72 /* CropAvatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 982D5F9B1D1CC37700D2DB72 /* CropAvatorView.swift */; };
-		983415F31D4EAF5C001C313B /* GuestProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983415F21D4EAF5C001C313B /* GuestProfileTableViewController.swift */; };
-		983415F61D4EB679001C313B /* GuestProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983415F51D4EB679001C313B /* GuestProfileNavigationController.swift */; };
 		9837460A1D663DD30031574E /* PostLike.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983746091D663DD30031574E /* PostLike.swift */; };
 		9837460D1D6646A60031574E /* PostLikeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9837460C1D6646A60031574E /* PostLikeTableViewController.swift */; };
 		9837460F1D6647650031574E /* PostLikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9837460E1D6647650031574E /* PostLikeTableViewCell.swift */; };
@@ -105,8 +103,6 @@
 		982D5F951D1A236C00D2DB72 /* StrechableHeaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StrechableHeaderViewController.swift; sourceTree = "<group>"; };
 		982D5F991D1CBB6700D2DB72 /* CropAvatorPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropAvatorPhotoViewController.swift; sourceTree = "<group>"; };
 		982D5F9B1D1CC37700D2DB72 /* CropAvatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropAvatorView.swift; sourceTree = "<group>"; };
-		983415F21D4EAF5C001C313B /* GuestProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestProfileTableViewController.swift; sourceTree = "<group>"; };
-		983415F51D4EB679001C313B /* GuestProfileNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestProfileNavigationController.swift; sourceTree = "<group>"; };
 		983746091D663DD30031574E /* PostLike.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLike.swift; sourceTree = "<group>"; };
 		9837460C1D6646A60031574E /* PostLikeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLikeTableViewController.swift; sourceTree = "<group>"; };
 		9837460E1D6647650031574E /* PostLikeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLikeTableViewCell.swift; sourceTree = "<group>"; };
@@ -202,15 +198,6 @@
 				248860444EBFDA5A9090783E /* Pods_scenested_experiment.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		983415F41D4EB654001C313B /* Guest Profile Page */ = {
-			isa = PBXGroup;
-			children = (
-				983415F21D4EAF5C001C313B /* GuestProfileTableViewController.swift */,
-				983415F51D4EB679001C313B /* GuestProfileNavigationController.swift */,
-			);
-			name = "Guest Profile Page";
 			sourceTree = "<group>";
 		};
 		9837460B1D6646790031574E /* Post Like */ = {
@@ -341,7 +328,6 @@
 				987BA7D81D05ABB80080F4DF /* Macro */,
 				98F6132F1D4BB78F00881004 /* Extensions */,
 				986A03BC1D2777B400BA45E7 /* Model */,
-				983415F41D4EB654001C313B /* Guest Profile Page */,
 				98EE27A51CCAC4B500FC9864 /* Profile Page */,
 				98AEC1C21D3D0CE100A9DAB6 /* FeatureImageView.swift */,
 				98AEC1CF1D45682100A9DAB6 /* Search Page */,
@@ -711,7 +697,6 @@
 				98B4B24A1D62876400588EF0 /* PostOnTableViewCell.swift in Sources */,
 				9837460D1D6646A60031574E /* PostLikeTableViewController.swift in Sources */,
 				98CFDC051D6B430200039BF9 /* PostCommentTableViewCell.swift in Sources */,
-				983415F61D4EB679001C313B /* GuestProfileNavigationController.swift in Sources */,
 				982D5F8E1D13903600D2DB72 /* UIImgeViewExtension.swift in Sources */,
 				986A03A71D2118B800BA45E7 /* CropCoverView.swift in Sources */,
 				98AEC1C51D3EC99B00A9DAB6 /* FeatureViewController.swift in Sources */,
@@ -720,7 +705,6 @@
 				98CFDBFF1D6A3B0500039BF9 /* ComposeCommentViewController.swift in Sources */,
 				98CFDC011D6A881800039BF9 /* PostComment.swift in Sources */,
 				98AEC1C31D3D0CE100A9DAB6 /* FeatureImageView.swift in Sources */,
-				983415F31D4EAF5C001C313B /* GuestProfileTableViewController.swift in Sources */,
 				98409C5F1D578B0D005B9D8B /* SignUpUserNamePasswordViewController.swift in Sources */,
 				98CFDBFC1D6A3AEB00039BF9 /* ComposeCommentNavigationViewController.swift in Sources */,
 				983746161D679FCA0031574E /* UINavigationViewControllerExtension.swift in Sources */,

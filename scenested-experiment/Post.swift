@@ -24,6 +24,7 @@ class Post{
     var mentionedUserList: [User]?
     
     let GetFreshPostLikesPath = HttpCallPath + "FetchFreshPostLike.php"
+    let GetFreshPostCommentsPath = HttpCallPath + "FetchFreshPostComments.php"
     let DeleteCommentPath = HttpCallPath + "DeleteComment.php"
     
     init(id: Int, postText: String, postTime: String, feature: Feature, photo: [PostPhoto]?, postLikeCount: Int, postCommentCount: Int,  mentionedUserList: [User]?){
@@ -78,10 +79,11 @@ class Post{
     
     
     //fetch the user information for post likes
-    internal func fetchPostLikeUserInfo(completionHandler: (response: [PostLike]?, error: String?) -> Void){
+    internal func fetchPostLikeInfo(completionHandler: (response: [PostLike]?, error: String?) -> Void){
         let param = [
-            "postId": id
+            "postId": self.id
         ]
+        self.postLikes = nil
         HttpRequest.sendRequest(GetFreshPostLikesPath, method: .GET, param: param, completionHandler: {
             response, error in
             dispatch_async(dispatch_get_main_queue(), {
@@ -95,12 +97,44 @@ class Post{
                             let postLike = PostLike(likeInfo: likeInfo)
                             postLikes?.append(postLike)
                         }
+                        self.postLikes = postLikes
                     }
                     completionHandler(response: postLikes, error: error)
                 }
             })
         })
     }
+    
+    internal func fetchPostCommentInfo(completionHandler: (response: [PostComment]?, error: String?) -> Void){
+        let param = [
+            "postId": self.id
+        ]
+        self.postComments = nil
+        HttpRequest.sendRequest(GetFreshPostCommentsPath, method: .GET, param: param, completionHandler: {
+            response, error in
+            dispatch_async(dispatch_get_main_queue(), {
+                if let multiplePostCommentInfo = response as? [[String: AnyObject]]{
+                    var postComments: [PostComment]?
+                    if multiplePostCommentInfo.count > 0{
+                        postComments = [PostComment]()
+                        for commentInfo in multiplePostCommentInfo{
+                            var commentInfo = commentInfo
+                            commentInfo["post"] = self
+                            let postComment = PostComment(commentInfo: commentInfo)
+                            postComments?.append(postComment)
+                        }
+                        self.postComments = postComments
+                    }
+                    completionHandler(response: postComments, error: error)
+                }
+            })
+        })
+
+    }
+    
+    
+    
+    
     
     internal func deleteComment(commentId: Int, completionHandler: (deletedSucceed: Bool) -> Void){
         let param = [
