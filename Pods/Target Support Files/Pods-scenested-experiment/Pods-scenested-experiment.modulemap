@@ -1,0 +1,6 @@
+framework module Pods_scenested_experiment {
+  umbrella header "Pods-scenested-experiment-umbrella.h"
+
+  export *
+  module * { export * }
+}
