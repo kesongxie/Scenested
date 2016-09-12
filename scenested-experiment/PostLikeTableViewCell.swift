@@ -40,7 +40,7 @@ class PostLikeTableViewCell: UITableViewCell {
  
     func updateUI(){
         if let postLike = postLike{
-            likeUserAvatorImageView?.loadImageWithUrl(postLike.likeUser?.avator?.url, imageUrlHash: postLike.likeUser?.avator?.hash, cacheType: CacheType.CacheForProfileAvator)
+            likeUserAvatorImageView?.loadImageWithUrl(postLike.likeUser?.avator?.url)
             likeUserFullNameLabel?.text = postLike.likeUser?.fullname
             likedTime?.text = convertDateStringToElapseTime(postLike.likeTime)?.uppercaseString
             

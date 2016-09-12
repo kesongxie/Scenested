@@ -18,53 +18,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var loggedInUser: User?
     
-    var peripheralManager: CBPeripheralManager! //act as source for beacon
-    
+  //  var peripheralManager: CBPeripheralManager! //act as source for beacon
     
     var blueToothPeripheralManager: CBPeripheralManager!
-    
     
     var centralManager: CBCentralManager!
     
     var window: UIWindow?
     
-    
-    var loggedInUserId: Int?
-    
-    
     var discoveredPeriperal: CBPeripheral?
     
     var connectedPeriperal = [CBPeripheral]()
    
-    var globalCache = NSCache()
-    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-       // setAttributedStyleText("@nicholas @nicholas is amain")
-        
-//        
-//        let navigationBarHeight: CGFloat = (self.window?.navigationController?.navigationBar.frame.size.height) ?? 0
-//        
-//        let tabBarHeight: CGFloat = self.tabBarController?.tabBar.frame.size.height ?? 0
-//
-
-        
         //specify the interaction types, ask the user permission for sending notification
-//        let notificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
-//        let settings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
-//        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-//        
-//        //register for remote notification, this would use the interation types above
-//        UIApplication.sharedApplication().registerForRemoteNotifications()
-//        
-//        // Override point for customization after application launch.
-//        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-//        peripheralManager = CBPeripheralManager(delegate: self, queue: queue)
-//        blueToothPeripheralManager = CBPeripheralManager(delegate: self, queue: queue)
-//        
-//        
-//        centralManager = CBCentralManager()
-//        centralManager.delegate = self
+        let notificationTypes: UIUserNotificationType = [.Alert, .Badge, .Sound]
+        let settings = UIUserNotificationSettings(forTypes: notificationTypes, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+        //register for remote notification, this would use the interation types above
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+        let queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+       // peripheralManager = CBPeripheralManager(delegate: self, queue: queue)
+        blueToothPeripheralManager = CBPeripheralManager(delegate: self, queue: queue)
+        centralManager = CBCentralManager(delegate: self, queue: queue)
         
         //initilize logged-in user data
         return true
@@ -82,12 +60,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-        //startBcakgroundAdvertising()
+        startBcakgroundAdvertising()
     }
     
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-        //startForegroundAdvertising()
+       // startForegroundAdvertising()
+        blueToothPeripheralManager.stopAdvertising()
     }
     
     func applicationDidBecomeActive(application: UIApplication) {
@@ -102,13 +81,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         //check whether the setting has been modified, ex. If the user disallows specific notification types, avoid using those types when configuring local and remote notifications for your app.
-        print("just registered notification setting")
         if notificationSettings.types == .None{
             //the user doesn't allow any notification
             return
         }
-        
-        
     }
     
     //MARK: Local Notification Delegate
@@ -124,6 +100,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //The device token is your key to sending push notifications to your app on a specific device. Device tokens can change, so your app needs to reregister every time it is launched and pass the received token back to your server.
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         //If registration was successful, send the device token to the server you use to generate remote notifications.
+        
+        
         let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
         var tokenString = ""
         
@@ -131,8 +109,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
         }
         userDeviceToken = tokenString
-        //Upon receiving the device token, the delegate method calls custom code to deliver that token to its server
+         
         
+       // Upon receiving the device token, the delegate method calls custom code to deliver that token to its server
+        //userDeviceToken = String(data: deviceToken, encoding: NSUTF8StringEncoding)
+        print(userDeviceToken)
+
     }
     
     
@@ -152,15 +134,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //when user swipe and open the notification, this method will be invoked
         
         if let info = userInfo["respondInfo"]{
-           
-            guard let respondUserId = info["respondUserId"] as? Int  else{
+            guard let respondUserId = info["respondUserId"] as? Int, let respondUserName = info["respondUserName"] as? String  else{
                 return
             }
-            
-            guard let respondUserName = info["respondUserName"] as? String else{
-                return
-            }
-           
             let pushProfileViewControllerNotification = NSNotification(name: NotificationLocalizedString.PushProfileViewControllerNotificationName,
                             object: self,
                             userInfo: [NotificationLocalizedString.RespondUserIdNameKey: respondUserId, NotificationLocalizedString.RespondUserNameKey: respondUserName]
@@ -174,7 +150,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //if it's in foreground
         //so notification in the ranging tab
-        
         completionHandler(UIBackgroundFetchResult.NoData) //must call the completion handler
     }
     
@@ -182,6 +157,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 //MARK: PeripheralManagerDelegate App acts as source
 extension AppDelegate: CBPeripheralManagerDelegate{
+    
+    //when call the addService of CBPeripheralManager class, this delegate method gets called.
     func peripheralManager(peripheral: CBPeripheralManager, didAddService service: CBService, error: NSError?) {
         print("did add service")
     }
@@ -195,7 +172,7 @@ extension AppDelegate: CBPeripheralManagerDelegate{
         //        localNotification.alertTitle = "didReceiveReadRequest from central"
         UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
         
-        request.value =  NSData(bytes: &loggedInUserId, length: sizeof(loggedInUserId.dynamicType))
+        request.value =  NSData(bytes: &loggedInUser!.id , length: sizeof(loggedInUser!.id.dynamicType))
         blueToothPeripheralManager.respondToRequest(request, withResult: .Success) //called this method exactly once per readRequest
     }
     
@@ -203,15 +180,9 @@ extension AppDelegate: CBPeripheralManagerDelegate{
     
     
     func startBcakgroundAdvertising(){
-        peripheralManager.stopAdvertising()
         blueToothPeripheralManager.stopAdvertising()
-        
         if !blueToothPeripheralManager.isAdvertising{
-            
             let cBUUID = AppCBUUID
-            let serviceUUID = [ cBUUID ] //servies and chracteristic uuid
-            
-            
             //construct the characteristic
             let characteristic = CBMutableCharacteristic(type: cBUUID, properties: CBCharacteristicProperties.Read, value: nil, permissions: CBAttributePermissions.Readable) //specify  the value to nil because it depends on which user is currently loggedin the App
             
@@ -222,17 +193,15 @@ extension AppDelegate: CBPeripheralManagerDelegate{
             
             //add service to the peripheralManager
             blueToothPeripheralManager.addService(service) //publish the service and chracteristic
-            
-            
+
             let blueToothAdvertisingData:[String: AnyObject] =
                 [
-                    CBAdvertisementDataServiceUUIDsKey: serviceUUID,
-                    ]
+                    CBAdvertisementDataServiceUUIDsKey: [ service.UUID ],
+                ]
             blueToothPeripheralManager.startAdvertising(blueToothAdvertisingData)
         }else{
             print("blue tooth advertising has already started")
         }
-        
     }
     
     
@@ -257,7 +226,7 @@ extension AppDelegate: CBPeripheralManagerDelegate{
         if error != nil{
             print(error)
         }else{
-//            print("start advertising")
+            print("start advertising")
         }
     }
     
@@ -270,12 +239,12 @@ extension AppDelegate: CBPeripheralManagerDelegate{
             startForegroundAdvertising()
         }else{
             //prompt only for the first time
-            if peripheralManager != nil{
-                switch peripheralManager!.state{
+            if blueToothPeripheralManager != nil{
+                switch blueToothPeripheralManager!.state{
                 case .PoweredOn:
                     startForegroundAdvertising()
                 default:
-                    print(peripheralManager!.state)
+                    print(blueToothPeripheralManager!.state)
                     //prompt the user to turn on the bluetooth sharing
                     dispatch_async(dispatch_get_main_queue(), {
                         let alert = UIAlertController(title: "Turn on Bluetooth", message: "Turn on bluetooth to allow sharing profiles with your near-by friends", preferredStyle: .Alert)
@@ -303,18 +272,38 @@ extension AppDelegate: CBPeripheralManagerDelegate{
 //MARK: CBCentralManagerDelegate for central
 
 extension AppDelegate: CBCentralManagerDelegate{
+    
+    /*
+        Invoked when the central manager’s state is updated.
+     
+        You implement this required method to ensure that Bluetooth low energy is supported and available to use on the central device. You should issue commands to the central manager only when the state of the central manager is powered on, as indicated by the CBCentralManagerStatePoweredOn constant. A state with a value lower than CBCentralManagerStatePoweredOn implies that scanning has stopped and that any connected peripherals have been disconnected. If the state moves below CBCentralManagerStatePoweredOff, all CBPeripheral objects obtained from this central manager become invalid and must be retrieved or discovered again. For a complete list and discussion of the possible values representing the state of the central manager, see the CBCentralManagerState enumeration in CBCentralManager Class Reference.
+     
+     */
     func centralManagerDidUpdateState(central: CBCentralManager) {
-//        print("central manager did update state")
-        let serviceUUID = [ CBUUID(NSUUID:  NSUUID(UUIDString: APPUUID)! ) ]
-        centralManager.scanForPeripheralsWithServices(serviceUUID, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
-        
+        let state = central.state
+        switch state{
+        case .PoweredOn:
+            let serviceUUID = [ CBUUID(NSUUID:  NSUUID(UUIDString: APPUUID)! ) ]
+            centralManager.scanForPeripheralsWithServices(serviceUUID, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
+        default:
+            print("disconnect peripheral")
+            break
+        }
     }
     
+    
+    //after calling scanForPeripheralsWithServices, the central manager calls this each time when it discovers a new peripheral
     func centralManager(central: CBCentralManager, didDiscoverPeripheral peripheral: CBPeripheral, advertisementData: [String : AnyObject], RSSI: NSNumber) {
-        if !connectedPeriperal.contains(peripheral){
-            connectedPeriperal.append(peripheral)
+        let discoveredPeripheral = peripheral
+        if !connectedPeriperal.contains(discoveredPeripheral){
+            print("found new CBPeripheral")
+            connectedPeriperal.append(discoveredPeripheral)
+            
+            //make the connection
             centralManager.connectPeripheral(connectedPeriperal.last!, options: nil)
             //print(RSSI)
+        }else{
+            print("existing CBPeripheral")
         }
         //centralManager.stopScan() //when its the one I want, or that's enough
     }
@@ -327,36 +316,24 @@ extension AppDelegate: CBCentralManagerDelegate{
         //after the connection has been made, this allows the central to discover the service provided by the peripheral
         peripheral.discoverServices([AppCBUUID]) //this would fire the callback "didDiscoverServices" of the peripheral delegate object
         let localNotification = UILocalNotification()
-        //        localNotification.alertTitle = "didConnectPeripheral"
         localNotification.alertBody = "just connected to a peripheral"
         UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
-//        print("just connected to a periphera")
     }
-    
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         let localNotification = UILocalNotification()
-        //        localNotification.alertTitle = "didDisconnectPeripheral from peripheral"
         localNotification.alertBody = "connection renounced"
         UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
-        
-//        print("connection renounced")
     }
-    
-    
     
     func centralManager(central: CBCentralManager, didFailToConnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         print(error?.localizedDescription)
     }
-    
-    
 }
 
 
 //MARK: CBPeripheralDelegate for interation between pheripheral and central, read write request, etc
 extension AppDelegate: CBPeripheralDelegate{
-    
-    
     //check what kind of services the peripheral provided
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         if let services = peripheral.services{
@@ -381,17 +358,22 @@ extension AppDelegate: CBPeripheralDelegate{
             if let retrievedData = characteristic.value{
                 var comeAcrossUserId = 0
                 retrievedData.getBytes(&comeAcrossUserId, length: sizeof(comeAcrossUserId.dynamicType))
-               // let localNotification = UILocalNotification()
-                //localNotification.alertTitle = "didUpdateValueForCharacteristic  perip delegate", ios 8.2 and up
-                //localNotification.alertBody = "The user id is: \(userId)"
-                //UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
+                let localNotification = UILocalNotification()
+                localNotification.alertBody = "The user id is: \(comeAcrossUserId)"
+                UIApplication.sharedApplication().presentLocalNotificationNow(localNotification)
                
-                //schedule a push notification if the user has the same feature as the current user
-                //pass the current user id and the one just came accross as well to the server, it's up to the server to determine whether the push notification should be send or not.
-//                if loggedInUserId != nil{
-//                    feature.rangingSimilarfeatureBetweenUsersById(userRequestId:loggedInUserId!, userComeAcrossId: comeAcrossUserId)
-//                }
-//                centralManager.cancelPeripheralConnection(peripheral)
+//                schedule a push notification if the user has the same feature as the current user
+//                pass the current user id and the one just came accross as well to the server, it's up to the server to determine whether the push notification should be send or not.
+                if loggedInUser?.id != nil{
+                    Feature.rangingSimilarFeatureBetweenUsersById(userRequestId: loggedInUser!.id!, userComeAcrossId: comeAcrossUserId)
+                }
+                centralManager.cancelPeripheralConnection(peripheral)
+                if connectedPeriperal.contains(peripheral){
+                    if let index = connectedPeriperal.indexOf(peripheral){
+                        connectedPeriperal.removeAtIndex(index)
+                        print("just removed new CBPeripheral")
+                    }
+                }
             }
         }
     }

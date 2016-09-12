@@ -27,7 +27,7 @@ class FeatureCollectionViewCell: UICollectionViewCell {
         if let feature = self.feature{
             self.featureName.text = feature.featureName.uppercaseString
             
-            featureImage.loadImageWithUrl(feature.coverPhoto.url, imageUrlHash: feature.coverPhoto.hash, cacheType: .CacheForFeatureCover)
+            featureImage.loadImageWithUrl(feature.coverPhoto.url)
             
 //            guard let cacheKey = getCacheKeyForType(feature.imageUrlHash, cacheType: CacheType.CacheForFeatureCover) else{
 //                return

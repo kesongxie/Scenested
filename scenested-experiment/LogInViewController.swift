@@ -99,8 +99,7 @@ class LogInViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LogInViewController.keyBoardDidHide), name: UIKeyboardDidHideNotification, object: nil)
         
-        
-        
+      
         loginIdenTextField.addTarget(self, action: #selector(LogInViewController.textFieldEditing(_:)), forControlEvents: .EditingChanged)
         loginPasswordTextField.addTarget(self, action: #selector(LogInViewController.textFieldEditing(_:)), forControlEvents: .EditingChanged)
         

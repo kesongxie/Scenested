@@ -34,7 +34,7 @@ class PostOnTableViewCell: UITableViewCell {
     func updateUI(){
         if feature != nil{
             featureNameLabel?.text = feature!.featureName
-            featureImageView?.loadImageWithUrl(feature!.coverPhoto.url, imageUrlHash: feature!.coverPhoto.hash, cacheType: CacheType.CacheForFeatureCover)
+            featureImageView?.loadImageWithUrl(feature!.coverPhoto.url)
             let postInFeatureCount = feature!.postCount
             featureDetailLabel?.text = String(postInFeatureCount) + " Post" + ((postInFeatureCount > 1) ? "s":"")
             

@@ -68,7 +68,6 @@ class Post{
             }
         }
         self.init(id: postId, postText: postText, postTime: postTime, feature: fearture, photo:photos,  postLikeCount: postLikeCount, postCommentCount: postCommentCount,  mentionedUserList: mentionedUserList)
-    
     }
 
     
@@ -144,6 +143,9 @@ class Post{
             (response, error) in
             dispatch_async(dispatch_get_main_queue(), {
                 if let deletedSucceed = response as? Bool{
+                    if deletedSucceed{
+                        self.postCommentCount -= 17
+                    }
                     completionHandler(deletedSucceed: deletedSucceed)
                 }else{
                     completionHandler(deletedSucceed: false)

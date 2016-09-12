@@ -82,12 +82,12 @@ class PostTableViewCell: UITableViewCell {
         descriptionTextView?.text = nil
         
         if let userAvator = post!.feature.user.avator{
-            postUserImageView.loadImageWithUrl(userAvator.url, imageUrlHash: userAvator.hash, cacheType: CacheType.CacheForProfileAvator)
+            postUserImageView.loadImageWithUrl(userAvator.url)
             
         }
         
         if let postImages = post?.photo?.first{
-            postPictureImageView.loadImageWithUrl(postImages.url, imageUrlHash: postImages.hash, cacheType: CacheType.CacheForPostPhoto)
+            postPictureImageView.loadImageWithUrl(postImages.url)
             postPictureImageView.frame.size.width = UIScreen.mainScreen().bounds.size.width
             postPictureHeightConstraint.constant =  postPictureImageView.frame.size.width / postImages.aspectRatio!
         }

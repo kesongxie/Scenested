@@ -136,6 +136,11 @@ func setLoggedInUser(userId: Int, completionHandler: (succeedLogin: Bool, respon
     })
 }
 
+func logoutUser(completionHandler: () -> Void){
+    (UIApplication.sharedApplication().delegate as? AppDelegate)?.loggedInUser = nil
+    completionHandler()
+}
+
 func getLoggedInUserFeatureCount() -> Int{
     return getLoggedInUser()?.features?.count ?? 0
 }
@@ -143,24 +148,24 @@ func getLoggedInUserFeatureCount() -> Int{
 
 
 //guarantee unique for each cache object
-func getCacheKeyForType(uniqueIden: String, cacheType: CacheType) -> String?{
-    var cachePrefix: String = ""
-    switch cacheType{
-    case .CacheForFeatureCover:
-       cachePrefix = CachePrefix.CachePrefixForFeatureCover
-    case .CacheForPostPhoto:
-        cachePrefix = CachePrefix.CachePrefixForPostPhoto
-    case .CacheForProfileAvator:
-        cachePrefix = CachePrefix.CachePrefixForProfileAvator
-    case .CacheForProfileCover:
-        cachePrefix = CachePrefix.CachePrefixForProfileCover
-    }
-    return cachePrefix + uniqueIden
-}
+//func getCacheKeyForType(uniqueIden: String, cacheType: CacheType) -> String?{
+//    var cachePrefix: String = ""
+//    switch cacheType{
+//    case .CacheForFeatureCover:
+//       cachePrefix = CachePrefix.CachePrefixForFeatureCover
+//    case .CacheForPostPhoto:
+//        cachePrefix = CachePrefix.CachePrefixForPostPhoto
+//    case .CacheForProfileAvator:
+//        cachePrefix = CachePrefix.CachePrefixForProfileAvator
+//    case .CacheForProfileCover:
+//        cachePrefix = CachePrefix.CachePrefixForProfileCover
+//    }
+//    return cachePrefix + uniqueIden
+//}
 
-func getGlobalCache() -> NSCache?{
-    return (UIApplication.sharedApplication().delegate as? AppDelegate)?.globalCache
-}
+//func getGlobalCache() -> NSCache?{
+//    return (UIApplication.sharedApplication().delegate as? AppDelegate)?.globalCache
+//}
 
 func convertDateStringToElapseTime(dateString: String?) -> String?{
     let dateFormatter = NSDateFormatter()
@@ -206,42 +211,21 @@ func retrieveTagUserNameListFromText(text: String) -> [String]?{
 }
 
 
-
-/*
- 
- 
- 
- //    let words = text.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
- 
- 
- //    for word in words.filter({ hashTagOrMentionedRegx.numberOfMatchesInString($0, options: [], range: $0.fullRange()) > 0 }){
- //        let matches = hashTagOrMentionedRegx.matchesInString(word, options: [], range: word.fullRange())
- //
- //        for match in matches{
- //            let stringToBeHighlighted = (word as NSString).substringWithRange(match.rangeAtIndex(0))
- //            let keyword = (stringToBeHighlighted as NSString).substringFromIndex(1)
- //            //get the range of the highlighted string
- //            let range = (self.text as NSString).rangeOfString(stringToBeHighlighted) //return NSString when the receiver is a NSString, otherwise if it's Stirng, this return Range<index>
- //
- //        }
- */
-
 func setAttributedStyleText(text: String){
     let hashTagOrMentionedRegx = try! NSRegularExpression(pattern: "[#|@][\\w]+", options: .CaseInsensitive)
     hashTagOrMentionedRegx.enumerateMatchesInString(text, options: .WithTransparentBounds, range: text.fullRange(), usingBlock: {
         (checkingResult, flag, stop) in
         print(checkingResult?.range)
-        
-    
     })
-    
-    
-    
-    
-    
-    
-    
-  }
+}
+
+func saveUserAvatorAsWelcomeAvator(avator: UIImage?){
+    if let avator = avator{
+        let fileManager = NSFileManager.defaultManager()
+        let avatorJPG = UIImageJPEGRepresentation(avator, 1.0)
+        fileManager.createFileAtPath(AppWelcomeAvatorFileDirectoryPath, contents: avatorJPG, attributes: nil)
+    }
+}
 
 
 

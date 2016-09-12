@@ -41,7 +41,7 @@ class PostCommentTableViewCell: UITableViewCell {
     
     func updateUI(){
         if let postComment = comment{
-            commentUserImageView?.loadImageWithUrl(postComment.commentUser.avator?.url, imageUrlHash: postComment.commentUser.avator?.hash, cacheType: CacheType.CacheForProfileAvator)
+            commentUserImageView?.loadImageWithUrl(postComment.commentUser.avator?.url)
             fullname?.text = postComment.commentUser.fullname
             time?.text =  convertDateStringToElapseTime(postComment.commentTime)?.uppercaseString
             commentText?.setStyleText(postComment.commentText!)

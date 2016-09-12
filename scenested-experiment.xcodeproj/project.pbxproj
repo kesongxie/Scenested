@@ -41,6 +41,7 @@
 		986A03B31D223DA900BA45E7 /* EditableProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986A03B21D223DA900BA45E7 /* EditableProfileViewController.swift */; };
 		986A03B91D2618E900BA45E7 /* MediaResponseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986A03B81D2618E900BA45E7 /* MediaResponseViewController.swift */; };
 		986A03BB1D2777AC00BA45E7 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986A03BA1D2777AC00BA45E7 /* Feature.swift */; };
+		986B68171D78E5B9000E0891 /* LoginAsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B68161D78E5B9000E0891 /* LoginAsViewController.swift */; };
 		986EB8121CC9B81B0012A198 /* ProfileNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986EB8111CC9B81B0012A198 /* ProfileNavigationController.swift */; };
 		986ED6091CD44BFE00101FEE /* FeatureCollectionViewCelll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986ED6081CD44BFE00101FEE /* FeatureCollectionViewCelll.swift */; };
 		987BA7CB1D046DCF0080F4DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 987BA7C91D046DCF0080F4DF /* Main.storyboard */; };
@@ -94,6 +95,7 @@
 		20ADEB88F37E3E21100F4628 /* Pods-scenested-experiment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-scenested-experiment.debug.xcconfig"; path = "Pods/Target Support Files/Pods-scenested-experiment/Pods-scenested-experiment.debug.xcconfig"; sourceTree = "<group>"; };
 		248860444EBFDA5A9090783E /* Pods_scenested_experiment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_scenested_experiment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98108A0B1CFE3EFB0093E878 /* PostCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCollectionViewCell.swift; sourceTree = "<group>"; };
+		981998E91D8711980029C941 /* scenested-experiment.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "scenested-experiment.entitlements"; sourceTree = "<group>"; };
 		982D5F881D1388AE00D2DB72 /* EditProfileNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileNavigationController.swift; sourceTree = "<group>"; };
 		982D5F8A1D1389A600D2DB72 /* EditProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
 		982D5F8D1D13903600D2DB72 /* UIImgeViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImgeViewExtension.swift; sourceTree = "<group>"; };
@@ -126,6 +128,7 @@
 		986A03B21D223DA900BA45E7 /* EditableProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = EditableProfileViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		986A03B81D2618E900BA45E7 /* MediaResponseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaResponseViewController.swift; sourceTree = "<group>"; };
 		986A03BA1D2777AC00BA45E7 /* Feature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		986B68161D78E5B9000E0891 /* LoginAsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginAsViewController.swift; sourceTree = "<group>"; };
 		986EB8111CC9B81B0012A198 /* ProfileNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileNavigationController.swift; sourceTree = "<group>"; };
 		986ED6081CD44BFE00101FEE /* FeatureCollectionViewCelll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeatureCollectionViewCelll.swift; sourceTree = "<group>"; };
 		987BA7CA1D046DCF0080F4DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -324,6 +327,7 @@
 		9895F8E41CBB440D00D7DA62 /* scenested-experiment */ = {
 			isa = PBXGroup;
 			children = (
+				981998E91D8711980029C941 /* scenested-experiment.entitlements */,
 				98F613301D4BB7B300881004 /* App Delegate */,
 				987BA7D81D05ABB80080F4DF /* Macro */,
 				98F6132F1D4BB78F00881004 /* Extensions */,
@@ -388,6 +392,7 @@
 			isa = PBXGroup;
 			children = (
 				985A1B6B1D5528080096F0FD /* WelcomeViewController.swift */,
+				986B68161D78E5B9000E0891 /* LoginAsViewController.swift */,
 				9861118F1D5A630C008A9A45 /* Log In Procedure */,
 				98409C5D1D5789A9005B9D8B /* Sign Up Procedure */,
 			);
@@ -702,6 +707,7 @@
 				98AEC1C51D3EC99B00A9DAB6 /* FeatureViewController.swift in Sources */,
 				987BA7DA1D05AC010080F4DF /* Macro.swift in Sources */,
 				98F90C901D63B54800F8DEB2 /* PostPhoto.swift in Sources */,
+				986B68171D78E5B9000E0891 /* LoginAsViewController.swift in Sources */,
 				98CFDBFF1D6A3B0500039BF9 /* ComposeCommentViewController.swift in Sources */,
 				98CFDC011D6A881800039BF9 /* PostComment.swift in Sources */,
 				98AEC1C31D3D0CE100A9DAB6 /* FeatureImageView.swift in Sources */,
@@ -843,6 +849,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "scenested-experiment/scenested-experiment.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "scenested-experiment/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
@@ -863,6 +870,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = "scenested-experiment/scenested-experiment.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "scenested-experiment/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;

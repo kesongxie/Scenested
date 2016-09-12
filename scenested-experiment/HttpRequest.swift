@@ -89,10 +89,9 @@ class HttpRequest{
     
     
     static func sendRequest(requestUrl: String, method: Alamofire.Method, param:[String: AnyObject]?, completionHandler: (response: AnyObject?, error: String?) -> Void ){
-        Alamofire.request(method, requestUrl, parameters: param, encoding: .URLEncodedInURL, headers: nil).validate().response(completionHandler: {
+        Alamofire.request(method, requestUrl, parameters: param, encoding: .URLEncodedInURL, headers: nil).response(completionHandler: {
                 (request, response, data, e) in
-            
-            //let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
+           //let str = NSString(data: data!, encoding: NSUTF8StringEncoding)
            // print(str)
                 if data != nil{
                     do{

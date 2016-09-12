@@ -143,9 +143,6 @@ class ProfileViewController: EditableProfileViewController {
         self.stretchWhenContentOffsetLessThanZero = true
         minTableHeaderHeight = (tableHeaderView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize)).height
         tableHeaderView.frame.size.height = minTableHeaderHeight//the minimum height for the tableheader view
-        
-        print(self.coverImageView?.frame)
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -167,7 +164,6 @@ class ProfileViewController: EditableProfileViewController {
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.isKindOfClass(UITableView){
             //scrolling the global table View
-            print(scrollView.contentOffset.y)
             super.scrollViewDidScroll(scrollView)
             
         }else if scrollView.isKindOfClass(UICollectionView){
@@ -197,11 +193,11 @@ class ProfileViewController: EditableProfileViewController {
            })
             
             if let avator = profileUser.avator{
-                self.profileAvator.loadImageWithUrl(avator.url, imageUrlHash: avator.hash, cacheType: CacheType.CacheForProfileAvator)
+                self.profileAvator.loadImageWithUrl(avator.url)
             }
             
             if let cover = profileUser.cover{
-                self.profileCover.loadImageWithUrl(cover.url, imageUrlHash: cover.hash, cacheType: CacheType.CacheForProfileCover)
+                self.profileCover.loadImageWithUrl(cover.url)
             }
         }
     }
@@ -370,7 +366,7 @@ class ProfileViewController: EditableProfileViewController {
             let deletefeatureAction = UIAlertAction(title: "Delete Feature", style: .Destructive, handler: {
                 alertAction in
                 let alert = UIAlertController(title: "Delete Feature", message: "All the posts inside " + featureCollectionViewCell.featureName.text! + " will be removed as well", preferredStyle: .Alert)
-                let confirmAction = UIAlertAction(title: "Delete", style: .Default, handler: {
+                let confirmAction = UIAlertAction(title: "Delete", style: .Destructive, handler: {
                     alertAction in
                     self.navigationItem.title = "Deleting Feature..."
                     getLoggedInUser()?.deleteFeature(featureCollectionViewCell.feature!, completionHandler: {

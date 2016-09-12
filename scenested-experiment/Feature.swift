@@ -188,9 +188,15 @@ class Feature{
     }
     
     
+    //before any post is loaded use the initial postCount value, after post is loadded, use the size of the array as the post count
+    internal func getCurrentLoadedPostCount() -> Int{
+        return self.post?.count ?? 0
+    }
     
+    internal func getTotalPostCount() -> Int{
+        return self.postCount
+    }
 
-    
     
     internal static func rangingSimilarFeatureBetweenUsersById(userRequestId requestUserId: Int, userComeAcrossId comeAcrossUserId: Int){
         //this is the parameter that needs to pass in
@@ -202,15 +208,6 @@ class Feature{
             repsondData in
             print(repsondData)
         })
-     }
-    
-    //before any post is loaded use the initial postCount value, after post is loadded, use the size of the array as the post count
-    internal func getCurrentLoadedPostCount() -> Int{
-        return self.post?.count ?? 0
-    }
-    
-    internal func getTotalPostCount() -> Int{
-        return self.postCount
     }
 
     

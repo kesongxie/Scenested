@@ -19,7 +19,9 @@ let UsernameMinLength:Int = 4
 let PasswordMinLength:Int = 6
 let ProfileCoverAspectRatio: CGFloat = 3.2
 
-let ServerRoot = "http://192.168.1.104:8888/iOS/"
+
+let AppWelcomeAvatorFileDirectoryPath = ((NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]) as NSString).stringByAppendingPathComponent("WelcomeAvator.jpg")
+let ServerRoot = "http://192.168.1.78:8888/iOS/"
 let HttpCallPath = ServerRoot + "User/HttpCall/"
 let RangingSimilarFeaturePath = ServerRoot + "PushNotification/RangeSimilarfeature.php"
 let FetchUserInfoPath = HttpCallPath + "FetchingUserInfo.php"
@@ -47,5 +49,6 @@ struct StoryboardIden{
     static let PostCommentViewControllerIden = "PostCommentViewControllerIden"
     static let UserNotExistViewControllerIden = "UserNotExistViewControllerIden"
     static let PostCommentNavigationControllerIden = "PostCommentNavigationControllerIden"
+    static let LoginAsViewControllerIden = "LoginAsViewControllerIden"
 }
 

@@ -79,7 +79,7 @@ extension ComposeCommentViewController: UITextViewDelegate{
             getLoggedInUser()?.commentPost(textView.text, post: post!, completionHandler: {
                 (comment) in
                 if comment != nil && self.respondingPostCell != nil{
-                    let countString = self.post!.postComments!.count == 0 ? "" : String(self.post!.postComments!.count)
+                    let countString = self.post!.postCommentCount == 0 ? "" : String(self.post!.postCommentCount)
                     self.respondingPostCell?.postCommentCountLabel.text = countString
                     self.dismissComposeCommentViewController()
                 }

@@ -85,6 +85,9 @@ class CropCoverPhotoViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+        return .Portrait
+    }
     
     
     func cancelBtnTapped(){

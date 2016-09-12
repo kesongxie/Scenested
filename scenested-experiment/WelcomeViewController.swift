@@ -27,6 +27,12 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let fileManager = NSFileManager()
+        if fileManager.fileExistsAtPath(AppWelcomeAvatorFileDirectoryPath){
+            let welcomeAvatorImage = UIImage(contentsOfFile: AppWelcomeAvatorFileDirectoryPath)
+            //present logged in as scene
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {

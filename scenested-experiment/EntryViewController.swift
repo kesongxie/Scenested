@@ -24,25 +24,35 @@ class EntryViewController: UIViewController {
        
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        User.isUserCredentialKeyChainPresented({
-            (valid, userId) in
-            
-            if valid && userId != nil{
-                (UIApplication.sharedApplication().delegate as? AppDelegate)?.loggedInUser = User(id: userId!, completionHandler: {
-                    (loggedInSucceed, responseData ) in
-                    if loggedInSucceed{
-                        self.presentTabBarViewController()
-                    }else{
-                        print("can't login the user")
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        if userDefault.objectForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey) != nil{
+            //if keychain is presented, verify automatcally
+            if userDefault.boolForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey){
+                User.isUserCredentialKeyChainPresented({
+                    (valid, userId) in
+                    if valid && userId != nil{
+                        (UIApplication.sharedApplication().delegate as? AppDelegate)?.loggedInUser = User(id: userId!, completionHandler: {
+                            (loggedInSucceed, responseData ) in
+                            if loggedInSucceed{
+                                self.presentTabBarViewController()
+                            }else{
+                                print("can't login the user")
+                            }
+                        })
                     }
                 })
-            }else{
-                let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
-                if let welcomeVC = loginStoryboard.instantiateViewControllerWithIdentifier(StoryboardIden.WelcomeViewControllerIden) as? WelcomeViewController{
-                     self.presentViewController(welcomeVC, animated: false, completion: nil)
+            }
+        }else{
+            print("need log in")
+            let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+            if let loginNVC = loginStoryboard.instantiateViewControllerWithIdentifier(StoryboardIden.LoginNavigationViewControllerIden) as? LoginNavigationViewController{
+                if let loginVC = loginNVC.viewControllers.first as? LogInViewController{
+                    self.presentViewController(loginNVC, animated: false, completion: nil)
                 }
             }
-        })
+            
+        }
+
         
 
         

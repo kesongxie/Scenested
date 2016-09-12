@@ -100,6 +100,8 @@ class AddFeatureViewController: StrechableHeaderViewController {
                 alertBody = body
             }
             if alertTitile != nil && alertBody != nil{
+                self.navigationItem.title = "Add Feature"
+                sender.enabled = true
                 let alert = UIAlertController(title: alertTitile!, message: alertBody!, preferredStyle: .Alert)
                 let okayAction = UIAlertAction(title: "Okay", style: .Cancel, handler: {
                     action in

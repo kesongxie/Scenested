@@ -27,6 +27,7 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+    
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>Share your features and scenes with near-by friends and see what they are interested in</string>
 	<key>NSCameraUsageDescription</key>

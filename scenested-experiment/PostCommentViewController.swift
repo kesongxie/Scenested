@@ -430,7 +430,7 @@ extension PostCommentViewController: UITextFieldDelegate{
                 let indexPathSetToLoad = [commentIndexPath]
                 self.loadComment(indexPathSetToLoad)
                 self.commentTextField.textAlignment = .Center
-                let countString = self.post!.postComments!.count == 0 ? "" : String(self.post!.postComments!.count)
+                let countString = self.post!.postCommentCount == 0 ? "" : String(self.post!.postComments!.count)
                 self.respondingPostCell?.postCommentCountLabel.text = countString
               }
         })

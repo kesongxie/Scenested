@@ -244,7 +244,6 @@ class User{
     internal func doneEditingProfile(profileInfo: [String: AnyObject]?, completionHandler: (response: [String : AnyObject]?, error: String?) -> Void  ){
         if let profileInfo = profileInfo{
             let images = profileInfo[User.EditProfileMediaKey] as? [String: UIImage]
-            
             var textualInfo = [String: AnyObject]()
             textualInfo[HttpRequest.SupportedParamKey.userId] = self.id
             if let additionalTextualInfo = profileInfo[User.EditProfileUserTextualInfoKey] as? [String: AnyObject]{
@@ -485,6 +484,7 @@ class User{
                     }else{
                         post.postComments = [postComment]
                     }
+                    post.postCommentCount += 1
                     completionHandler(postComment)
                 }
             }
@@ -492,17 +492,35 @@ class User{
     }
 
     
+    
+    // MARK: Log out user
+    internal func logoutUser(userAvator: UIImage?, completionHandler: () -> Void){
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        if userDefault.objectForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey) != nil{
+            if userDefault.boolForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey){
+                userDefault.setBool(false, forKey: KeyChainLocalizedString.KeyChainSetForUserDefaultKey)
+                //save the current user avator image to file directory
+                saveUserAvatorAsWelcomeAvator(userAvator)
+                completionHandler()
+            }
+        }
+    }
+
+    
+    
 
     //check whether the credential is in the keychain or not and verify it
     internal static func isUserCredentialKeyChainPresented(completionHander: (valid: Bool, userId: Int?) -> Void){
-        let userDefault = NSUserDefaults.standardUserDefaults()
-        if userDefault.objectForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey) != nil{
+      //  let userDefault = NSUserDefaults.standardUserDefaults()
+        //if userDefault.objectForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey) != nil{
             //if keychain is presented, verify automatcally
-            if userDefault.boolForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey){
-                let keyChain = KeychainWrapper()
-                let password = keyChain.myObjectForKey(KeyChainLocalizedString.KeyChainObjectKeyForPassword) as! String
-                let userId = keyChain.myObjectForKey(KeyChainLocalizedString.KeyChainObjectKeyForUserId) as! Int
-                User.authenticateUserByUserIdAndPassword(userId, password: password, completionHandler: {
+//            if userDefault.boolForKey(KeyChainLocalizedString.KeyChainSetForUserDefaultKey){
+            let keyChain = KeychainWrapper()
+            let password = keyChain.myObjectForKey(KeyChainLocalizedString.KeyChainObjectKeyForPassword) as? String
+            let userId = keyChain.myObjectForKey(KeyChainLocalizedString.KeyChainObjectKeyForUserId) as? Int
+        
+            if password != nil && userId != nil{
+                User.authenticateUserByUserIdAndPassword(userId!, password: password!, completionHandler: {
                     valid in
                     dispatch_async(dispatch_get_main_queue(), {
                         if valid{
@@ -515,10 +533,8 @@ class User{
             }else{
                 completionHander(valid: false, userId: nil)
             }
-        }else{
-            completionHander(valid: false, userId: nil)
+        
         }
-    }
     
     
     
@@ -565,7 +581,6 @@ class User{
             
         }
     }
-    
     
     //authenticate the user by user id and password, usually called from isUserCredentialKeyChainPresented
     internal static func authenticateUserByUserIdAndPassword(userId: Int, password: String, completionHandler: ( Bool ) -> Void){

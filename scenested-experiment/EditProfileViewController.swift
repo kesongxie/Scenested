@@ -17,9 +17,7 @@ class EditProfileViewController: EditableProfileViewController {
             profileAvator.clipsToBounds = true
             profileAvator.layer.borderColor = UIColor.whiteColor().CGColor
             profileAvator.layer.borderWidth = 3.0
-            
         }
-
     }
     
     @IBOutlet weak var profileCover: UIImageView!
@@ -30,6 +28,22 @@ class EditProfileViewController: EditableProfileViewController {
     @IBOutlet weak var placeHolderLabel: UILabel!
     
     @IBOutlet weak var bioTextView: UITextView!
+    
+    @IBAction func logoutUser(sender: UIButton) {
+        getLoggedInUser()?.logoutUser(profileAvatorImage, completionHandler: {
+            let loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+            if let loginAsVC = loginStoryboard.instantiateViewControllerWithIdentifier(StoryboardIden.LoginAsViewControllerIden) as? LoginAsViewController{
+                let fileManager = NSFileManager()
+                if fileManager.fileExistsAtPath(AppWelcomeAvatorFileDirectoryPath){
+                    let welcomeAvatorImage = UIImage(contentsOfFile: AppWelcomeAvatorFileDirectoryPath)
+                    //present logged in as scene
+                    loginAsVC.welcomeAvatorImage = welcomeAvatorImage
+                    self.presentViewController(loginAsVC, animated: false, completion: nil)
+                }
+            }
+        })
+    }
+    
 
     private var isKeyBoardActive: Bool = false //true when the keyboard is currently visible
     

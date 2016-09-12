@@ -98,7 +98,6 @@ class MediaResponseViewController: UIViewController {
     
     func isAvailableToUseCamera() -> Bool{
         let status = AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo)
-        print(status)
         switch status {
         case .Authorized:
             return true
@@ -138,59 +137,58 @@ class MediaResponseViewController: UIViewController {
 
 
 extension MediaResponseViewController: UIImagePickerControllerDelegate{
+    
+    
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
-        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        
+        if let selectedImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
         //depends on which type the image is, crop avator or cover
-        
-        
         switch imagePickerUploadPhotoFor{
-        case .profileAvator:
-            if let cropAvatorViewController = storyboard?.instantiateViewControllerWithIdentifier("CropAvatorPhotoViewControllerIden") as? CropAvatorPhotoViewController
-                
-                
-            {
-                cropAvatorViewController.image = selectedImage
-                cropAvatorViewController.cropPhotoForViewController = self
-                picker.presentViewController(cropAvatorViewController, animated: true, completion: {
-                })
-            }
-        case .profileCover:
-            if let cropCoverViewController = storyboard?.instantiateViewControllerWithIdentifier("CropCoverPhotoViewControllerIden") as? CropCoverPhotoViewController
-            {
-                cropCoverViewController.image = selectedImage
-                cropCoverViewController.cropPhotoForViewController = self
-                picker.presentViewController(cropCoverViewController, animated: true, completion: {
-                })
-            }
-        case .featureCover:
-            
-            if let addFeatureNaviVC = storyboard?.instantiateViewControllerWithIdentifier(StoryboardIden.AddFeatureNavigationControllerIden) as? AddFeatureNavigationController
-            {
-                if let addfeatureVC = addFeatureNaviVC.viewControllers.first as? AddFeatureViewController{
-                    addfeatureVC.featureCoverImage = selectedImage
-                    picker.presentViewController(addFeatureNaviVC, animated: true, completion: {
+            case .profileAvator:
+                if let cropAvatorViewController = storyboard?.instantiateViewControllerWithIdentifier("CropAvatorPhotoViewControllerIden") as? CropAvatorPhotoViewController
+                    
+                {
+                    cropAvatorViewController.image = selectedImage
+                    cropAvatorViewController.cropPhotoForViewController = self
+                    picker.presentViewController(cropAvatorViewController, animated: true, completion: {
                     })
                 }
+            case .profileCover:
+                if let cropCoverViewController = storyboard?.instantiateViewControllerWithIdentifier("CropCoverPhotoViewControllerIden") as? CropCoverPhotoViewController
+                {
+                    cropCoverViewController.image = selectedImage
+                    cropCoverViewController.cropPhotoForViewController = self
+                    picker.presentViewController(cropCoverViewController, animated: true, completion: {
+                    })
+                }
+            case .featureCover:
+                
+                if let addFeatureNaviVC = storyboard?.instantiateViewControllerWithIdentifier(StoryboardIden.AddFeatureNavigationControllerIden) as? AddFeatureNavigationController
+                {
+                    if let addfeatureVC = addFeatureNaviVC.viewControllers.first as? AddFeatureViewController{
+                        addfeatureVC.featureCoverImage = selectedImage
+                        picker.presentViewController(addFeatureNaviVC, animated: true, completion: {
+                        })
+                    }
+                }
+            case .signUpAvator:
+                let mainStoryBoard = UIStoryboard(name: "Global", bundle: nil)
+                if let cropAvatorViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("CropAvatorPhotoViewControllerIden") as? CropAvatorPhotoViewController
+                {
+                    cropAvatorViewController.image = selectedImage
+                    cropAvatorViewController.cropPhotoForViewController = self
+                    picker.presentViewController(cropAvatorViewController, animated: true, completion: {
+                    })
+                }
+            case .postPicture:
+                if let EditPostVC = self as? EditPostViewController{
+                    EditPostVC.postImage = selectedImage
+                    EditPostVC.dismissViewControllerAnimated(true, completion: nil)
+                }
+                
+            default:
+                break
             }
-        case .signUpAvator:
-            let mainStoryBoard = UIStoryboard(name: "Global", bundle: nil)
-            if let cropAvatorViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("CropAvatorPhotoViewControllerIden") as? CropAvatorPhotoViewController
-            {
-                cropAvatorViewController.image = selectedImage
-                cropAvatorViewController.cropPhotoForViewController = self
-                picker.presentViewController(cropAvatorViewController, animated: true, completion: {
-                })
-            }
-        case .postPicture:
-            if let EditPostVC = self as? EditPostViewController{
-                EditPostVC.postImage = selectedImage
-                EditPostVC.dismissViewControllerAnimated(true, completion: nil)
-            }
-            
-        default:
-            break
         }
     }
     
