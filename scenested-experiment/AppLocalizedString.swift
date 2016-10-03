@@ -53,6 +53,11 @@ struct NotificationLocalizedString{
     static let TextViewTappedNotificationName = "TextViewTappedNotification"
     static let TextViewMentionedTappedNotificationName = "TextViewMentionedTappedNotification"
     static let PostsOfFeatureUpdatedNotificationName = "PostsOfFeatureUpdatedNotification"
+    static let RangingInitNotificationName = "RangingInitNotification"
+    static let CentralManagerStateUpdatedNotificationName = "CentralManagerStateUpdatedNotification"
+    static let ComeAcrossUserProfileViewRequestNotificationName = "ComeAcrossUserProfileViewRequestNotification"
+    
+    static let NearByUserIdUpdatedNotificationName = "NearByUserIdUpdatedNotification"
     
     
     static let RespondUserIdNameKey = "userId"

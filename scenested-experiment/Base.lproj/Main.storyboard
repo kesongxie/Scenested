@@ -16,51 +16,67 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="QL4-km-n6b" userLabel="Header View">
-                            <rect key="frame" x="0.0" y="64" width="375" height="138"/>
+                        <view key="tableHeaderView" clipsSubviews="YES" contentMode="scaleToFill" id="r1R-Ne-GF7" userLabel="Default View">
+                            <rect key="frame" x="0.0" y="64" width="375" height="265"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2yS-Am-nbK">
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Id" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nTw-Rr-OlL">
-                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
+                                <view alpha="0.44999998807907104" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifq-Mp-4Uu">
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile-user-shape" translatesAutoresizingMaskIntoConstraints="NO" id="uHt-Qt-xjn">
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="fgQ-Eq-aGw"/>
+                                                <constraint firstAttribute="height" constant="100" id="sRI-dP-dC2"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No near-by profile found" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLg-2S-V7T">
+                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                            <color key="textColor" red="0.70588235290000001" green="0.70588235290000001" blue="0.70588235290000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstItem="yLg-2S-V7T" firstAttribute="centerX" secondItem="uHt-Qt-xjn" secondAttribute="centerX" id="6Bh-ac-vKP"/>
+                                        <constraint firstItem="uHt-Qt-xjn" firstAttribute="centerY" secondItem="ifq-Mp-4Uu" secondAttribute="centerY" constant="-30" id="9yn-Vg-OJ0"/>
+                                        <constraint firstItem="yLg-2S-V7T" firstAttribute="top" secondItem="uHt-Qt-xjn" secondAttribute="bottom" constant="8" symbolic="YES" id="bBM-Uh-T0s"/>
+                                        <constraint firstAttribute="trailing" secondItem="yLg-2S-V7T" secondAttribute="trailing" constant="20" symbolic="YES" id="rD0-Zh-UoJ"/>
+                                        <constraint firstItem="yLg-2S-V7T" firstAttribute="leading" secondItem="ifq-Mp-4Uu" secondAttribute="leading" constant="20" symbolic="YES" id="vZv-IS-zlS"/>
+                                        <constraint firstItem="uHt-Qt-xjn" firstAttribute="centerX" secondItem="ifq-Mp-4Uu" secondAttribute="centerX" id="wH5-G9-reh"/>
+                                    </constraints>
+                                </view>
+                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="b0q-Tj-eY1"/>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
-                                <constraint firstItem="nTw-Rr-OlL" firstAttribute="leading" secondItem="2yS-Am-nbK" secondAttribute="leading" id="37D-eD-uJt"/>
-                                <constraint firstAttribute="trailing" secondItem="2yS-Am-nbK" secondAttribute="trailing" constant="8" id="7h8-ia-JF9"/>
-                                <constraint firstItem="2yS-Am-nbK" firstAttribute="top" secondItem="QL4-km-n6b" secondAttribute="top" constant="8" id="Lun-Nl-W0d"/>
-                                <constraint firstItem="nTw-Rr-OlL" firstAttribute="trailing" secondItem="2yS-Am-nbK" secondAttribute="trailing" id="MJY-JN-Oa8"/>
-                                <constraint firstItem="nTw-Rr-OlL" firstAttribute="top" secondItem="2yS-Am-nbK" secondAttribute="bottom" constant="8" id="p8P-W5-lHh"/>
-                                <constraint firstItem="2yS-Am-nbK" firstAttribute="leading" secondItem="QL4-km-n6b" secondAttribute="leading" constant="8" id="rzR-CN-L4f"/>
+                                <constraint firstAttribute="trailing" secondItem="ifq-Mp-4Uu" secondAttribute="trailing" id="EVX-Q6-JwK"/>
+                                <constraint firstItem="b0q-Tj-eY1" firstAttribute="centerX" secondItem="r1R-Ne-GF7" secondAttribute="centerX" id="KLh-jQ-zmL"/>
+                                <constraint firstAttribute="bottom" secondItem="ifq-Mp-4Uu" secondAttribute="bottom" id="L2q-rx-bhe"/>
+                                <constraint firstItem="ifq-Mp-4Uu" firstAttribute="leading" secondItem="r1R-Ne-GF7" secondAttribute="leading" id="Rb4-EU-8Sv"/>
+                                <constraint firstItem="ifq-Mp-4Uu" firstAttribute="top" secondItem="r1R-Ne-GF7" secondAttribute="top" id="awr-Ug-Y6e"/>
+                                <constraint firstItem="b0q-Tj-eY1" firstAttribute="centerY" secondItem="r1R-Ne-GF7" secondAttribute="centerY" id="jMa-W6-bvh"/>
                             </constraints>
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NearByCell" rowHeight="74" id="WnU-Eu-Nmb" customClass="NearByTableViewCell" customModule="scenested_experiment" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="230" width="375" height="74"/>
+                                <rect key="frame" x="0.0" y="357" width="375" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WnU-Eu-Nmb" id="TP4-AS-Lhb">
                                     <frame key="frameInset" width="375" height="74"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TgF-zh-7iX">
+                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TgF-zh-7iX">
+                                            <color key="backgroundColor" red="0.74509803919999995" green="0.74509803919999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="9P6-pD-NrB"/>
                                                 <constraint firstAttribute="height" constant="48" id="Rx5-XE-kYA"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kesong Xie" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyk-Nb-b58">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fullname" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jyk-Nb-b58">
                                             <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                             <color key="textColor" red="0.078431372549019607" green="0.078431372549019607" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PROGRAMMING, GUITAR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08C-I6-5Z0">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Features" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="08C-I6-5Z0">
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" red="0.3921568627" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
@@ -113,6 +129,21 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="NEAR BY" id="Tlr-pq-8An"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="DqH-Si-Sxq">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <connections>
+                            <action selector="refresh:" destination="gos-7c-znV" eventType="valueChanged" id="DSC-FC-NlR"/>
+                        </connections>
+                    </refreshControl>
+                    <connections>
+                        <outlet property="activityIndicator" destination="b0q-Tj-eY1" id="iBW-zu-3cK"/>
+                        <outlet property="defaultImageView" destination="uHt-Qt-xjn" id="Lb5-0j-17i"/>
+                        <outlet property="defaultMessageTextLabel" destination="yLg-2S-V7T" id="xhP-UU-XmD"/>
+                        <outlet property="defaultMessageView" destination="ifq-Mp-4Uu" id="AJp-TJ-qcj"/>
+                        <outlet property="defaultView" destination="r1R-Ne-GF7" id="xkc-57-kvG"/>
+                        <outlet property="loadingIndicator" destination="DqH-Si-Sxq" id="wBI-i8-TIt"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d7N-Ys-myj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -179,10 +210,10 @@
             </objects>
             <point key="canvasLocation" x="-1911" y="975"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Near By Navigation Controller-->
         <scene sceneID="Ii5-Cl-6AS">
             <objects>
-                <navigationController storyboardIdentifier="NearByNVC" automaticallyAdjustsScrollViewInsets="NO" id="ljC-4E-afg" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="NearByNavigationControllerIden" automaticallyAdjustsScrollViewInsets="NO" id="ljC-4E-afg" customClass="NearByNavigationController" customModule="scenested_experiment" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="range-icon" id="nxk-0M-ABe">
                         <inset key="imageInsets" minX="0.0" minY="6" maxX="0.0" maxY="-6"/>
                     </tabBarItem>

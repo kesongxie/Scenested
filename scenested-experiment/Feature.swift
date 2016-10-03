@@ -29,6 +29,8 @@ class Feature{
     static let SharePostFeatureIdKey = "featureId"
     static let SharePostMediaKey = "postMedia"
     static let SharePostTextualInfoKey = "postTextualInfo"
+    static let RangingSimilarFeaturePath = ServerRoot + "PushNotification/RangeSimilarFeature.php"
+
     
 
     
@@ -200,14 +202,19 @@ class Feature{
     
     internal static func rangingSimilarFeatureBetweenUsersById(userRequestId requestUserId: Int, userComeAcrossId comeAcrossUserId: Int){
         //this is the parameter that needs to pass in
-        var rangingFeatureParameterInfo = [String: String]()
-        rangingFeatureParameterInfo[RangingFeatureLocalizedString.RequestUserIdKey] = String(requestUserId)
-        rangingFeatureParameterInfo[RangingFeatureLocalizedString.ComeAcrossUserIdKey] = String(comeAcrossUserId)
-        let httpRequest = HttpRequest(requestPath: RangingSimilarFeaturePath, parameterInfo: rangingFeatureParameterInfo)
-        httpRequest.send(completionHandler: {
-            repsondData in
-            print(repsondData)
+        print("ranging similar feature starts")
+        
+        
+        let param: [String: AnyObject] = [
+           "request_user_id": requestUserId,
+           "come_across_user_id": comeAcrossUserId
+        ]
+        HttpRequest.sendRequest(Feature.RangingSimilarFeaturePath, method: .GET, param: param, completionHandler: {
+            (response, error) in
+            print(response)
         })
+        
+        
     }
 
     

@@ -40,6 +40,9 @@ class User{
     static let UserAuthenticationByUsernamePasswordPath = HttpCallPath + "UserAuthenticationByUsernamePassword.php"
     static let UserAuthenticationByUserIdPasswordPath = HttpCallPath + "UserAuthenticationByUserIdPassword.php"
 
+    
+    let UpdateRemoteNotificationDeviceTokenStringPath = HttpCallPath + "UpdateRemoteNotificationDeviceTokenString.php"
+
     static let loginSucceedStatusCode = 200
     static let registeredSucceedStatusCode = 200
     static let registeredFailedStatusCode = 500
@@ -151,7 +154,17 @@ class User{
     }
     
 
-    
+    internal func updateUserDeviceTokenForRemoteNotification(deviceToken: String){
+        let param: [String: AnyObject] = [
+            "deviceToken": deviceToken,
+            "userId": self.id!
+        ]
+        
+        HttpRequest.sendRequest(UpdateRemoteNotificationDeviceTokenStringPath, method: .GET, param: param, completionHandler: {
+            (response, error) in
+            //print(response)
+        })
+    }
     
     
     //called after profile updated
@@ -160,13 +173,7 @@ class User{
             setUserGeneralInfoByUserInfo(info)
         }
     }
-    
-    
-    
-    
-//    deinit{
-//        print("user get cleared")
-//    }
+
     
     /*
         register a user

@@ -129,6 +129,7 @@ func getLoggedInUser() -> User?{
     return (UIApplication.sharedApplication().delegate as? AppDelegate)?.loggedInUser
 }
 
+
 func setLoggedInUser(userId: Int, completionHandler: (succeedLogin: Bool, respondInfo: AnyObject?) -> Void ){
     (UIApplication.sharedApplication().delegate as? AppDelegate)?.loggedInUser =  User(id: userId, completionHandler: {
         (succeed, info) in
@@ -139,6 +140,10 @@ func setLoggedInUser(userId: Int, completionHandler: (succeedLogin: Bool, respon
 func logoutUser(completionHandler: () -> Void){
     (UIApplication.sharedApplication().delegate as? AppDelegate)?.loggedInUser = nil
     completionHandler()
+}
+
+func getCurrentNearByUserIdList() -> [Int]?{
+    return (UIApplication.sharedApplication().delegate as? AppDelegate)?.currentNearByUserIdList
 }
 
 func getLoggedInUserFeatureCount() -> Int{

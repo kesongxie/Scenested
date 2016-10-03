@@ -41,6 +41,8 @@ class EntryViewController: UIViewController {
                         })
                     }
                 })
+            }else{
+                print("hello")
             }
         }else{
             print("need log in")

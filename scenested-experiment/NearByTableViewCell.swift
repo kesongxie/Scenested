@@ -13,20 +13,22 @@ class NearByTableViewCell: UITableViewCell {
     
     var user: User?{
         didSet{
+            userNameLabel?.text = user?.fullname
+            userAvatorImageView.loadImageWithUrl(user?.avator?.url)
             
-//            userAvatorImageView.image = UIImage(named: user!.avatorUrl)
-//            
-//            
-//            userNameLabel.text = user?.fullname
-//            userfeatureLabel.text = "Programming, Tennis"
+            if let featureString = user?.getUserFeaturesAsString(){
+                userfeatureLabel.text = featureString
+            }else{
+                userfeatureLabel.text = "NO FEATURE YET"
+                userfeatureLabel.alpha = 0.6
+            }
         }
     }
     
     
-    
     @IBOutlet weak var userAvatorImageView: UIImageView!{
         didSet{
-            userAvatorImageView.layer.cornerRadius = userAvatorImageView.frame.size.width / 2
+            userAvatorImageView.layer.cornerRadius = 24
             userAvatorImageView.clipsToBounds = true
         }
     }
@@ -43,11 +45,7 @@ class NearByTableViewCell: UITableViewCell {
         }
     }
     
-    
-    
-    
    
-
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

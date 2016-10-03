@@ -479,7 +479,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let featureCell = collectionView.dequeueReusableCellWithReuseIdentifier(featureSlideConstant.featureCellReuseIdentifier, forIndexPath: indexPath) as! FeatureCollectionViewCell
         featureCell.layer.cornerRadius = StyleSchemeConstant.horizontalSlider.horizontalSliderCornerRadius
-        featureCell.feature = getLoggedInUser()?.features![indexPath.row]
+        featureCell.feature = profileUser?.features![indexPath.row]
 
         // the cell will have long press gesture only when is logged in user's profile
         if isLoggedInUserProfile{

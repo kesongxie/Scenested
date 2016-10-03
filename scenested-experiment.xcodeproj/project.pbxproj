@@ -24,6 +24,7 @@
 		983746111D666E1E0031574E /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983746101D666E1E0031574E /* NSDateExtension.swift */; };
 		983746131D6790060031574E /* Temp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983746121D6790060031574E /* Temp.swift */; };
 		983746161D679FCA0031574E /* UINavigationViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983746151D679FCA0031574E /* UINavigationViewControllerExtension.swift */; };
+		98400BE41D88B8E400522536 /* NearByNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98400BE31D88B8E400522536 /* NearByNavigationController.swift */; };
 		98409C5C1D57899E005B9D8B /* SignUpProcedureNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98409C5B1D57899E005B9D8B /* SignUpProcedureNavigationController.swift */; };
 		98409C5F1D578B0D005B9D8B /* SignUpUserNamePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98409C5E1D578B0D005B9D8B /* SignUpUserNamePasswordViewController.swift */; };
 		984B77E51CD929CA00623F7D /* GuestPostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984B77E41CD929CA00623F7D /* GuestPostTableViewCell.swift */; };
@@ -111,6 +112,7 @@
 		983746101D666E1E0031574E /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		983746121D6790060031574E /* Temp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Temp.swift; sourceTree = "<group>"; };
 		983746151D679FCA0031574E /* UINavigationViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UINavigationViewControllerExtension.swift; sourceTree = "<group>"; };
+		98400BE31D88B8E400522536 /* NearByNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearByNavigationController.swift; sourceTree = "<group>"; };
 		98409C5B1D57899E005B9D8B /* SignUpProcedureNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpProcedureNavigationController.swift; sourceTree = "<group>"; };
 		98409C5E1D578B0D005B9D8B /* SignUpUserNamePasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpUserNamePasswordViewController.swift; sourceTree = "<group>"; };
 		984B77E41CD929CA00623F7D /* GuestPostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestPostTableViewCell.swift; sourceTree = "<group>"; };
@@ -374,6 +376,7 @@
 			children = (
 				98AEC1D01D45685B00A9DAB6 /* NearByTableViewCell.swift */,
 				98AEC1D21D45687B00A9DAB6 /* NearByTableViewController.swift */,
+				98400BE31D88B8E400522536 /* NearByNavigationController.swift */,
 			);
 			name = "Search Page";
 			sourceTree = "<group>";
@@ -560,6 +563,9 @@
 						DevelopmentTeam = 2ATYTS9SNC;
 						LastSwiftMigration = 0800;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -720,6 +726,7 @@
 				982D5F9A1D1CBB6700D2DB72 /* CropAvatorPhotoViewController.swift in Sources */,
 				986A03BB1D2777AC00BA45E7 /* Feature.swift in Sources */,
 				985A1B6C1D5528080096F0FD /* WelcomeViewController.swift in Sources */,
+				98400BE41D88B8E400522536 /* NearByNavigationController.swift in Sources */,
 				98AACA521D60D107001BCFE4 /* EditPostViewController.swift in Sources */,
 				986ED6091CD44BFE00101FEE /* FeatureCollectionViewCelll.swift in Sources */,
 				983746111D666E1E0031574E /* NSDateExtension.swift in Sources */,

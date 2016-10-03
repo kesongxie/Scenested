@@ -18,7 +18,7 @@ extension UINavigationController{
                 profileVC.navigationItem.leftBarButtonItem?.target = self
                 profileVC.navigationItem.leftBarButtonItem?.action = #selector(self.popProfile)
                 self.pushViewController(profileVC, animated: true)
-           }
+            }
         }else{
             //push a user profile page with default user not existed infomation
             if let userNotExistVC = storyboard?.instantiateViewControllerWithIdentifier(StoryboardIden.UserNotExistViewControllerIden) as? UserNotExistViewController{
