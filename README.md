@@ -1,4 +1,4 @@
-# Scenested
+# Scenested-App
 <ul>
 <li>Designed and developed an iOS App using Swift that connects people nearby with similar interests</li>
 <li>Deployed Core Bluetooth API and iBeacon technologies for detecting users based upon device proximity,performing background fetching for remote notification delivery when interest matches.</li>     
