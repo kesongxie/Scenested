@@ -21,7 +21,7 @@ let ProfileCoverAspectRatio: CGFloat = 3.2
 
 
 let AppWelcomeAvatorFileDirectoryPath = ((NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0]) as NSString).stringByAppendingPathComponent("WelcomeAvator.jpg")
-let ServerRoot = "http://10.20.2.39:8888/iOS/"
+let ServerRoot = "http://137.110.101.177:8888/iOS/"
 let HttpCallPath = ServerRoot + "User/HttpCall/"
 let FetchUserInfoPath = HttpCallPath + "FetchingUserInfo.php"
 
