@@ -15,10 +15,62 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Alamofire (3.4.1)
+  - AWSAutoScaling (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSCloudWatch (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSCognito (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSCognitoIdentityProvider (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSCore (2.4.5)
+  - AWSDynamoDB (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSEC2 (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSElasticLoadBalancing (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSIoT (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSKinesis (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSLambda (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSMachineLearning (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSMobileAnalytics (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSS3 (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSSES (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSSimpleDB (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSSNS (2.4.5):
+    - AWSCore (= 2.4.5)
+  - AWSSQS (2.4.5):
+    - AWSCore (= 2.4.5)
 
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`, branch `swift2.3`)
+  - AWSAutoScaling
+  - AWSCloudWatch
+  - AWSCognito
+  - AWSCognitoIdentityProvider
+  - AWSDynamoDB
+  - AWSEC2
+  - AWSElasticLoadBalancing
+  - AWSIoT
+  - AWSKinesis
+  - AWSLambda
+  - AWSMachineLearning
+  - AWSMobileAnalytics
+  - AWSS3
+  - AWSSES
+  - AWSSimpleDB
+  - AWSSNS
+  - AWSSQS
 
 EXTERNAL SOURCES:
   Alamofire:
@@ -33,7 +85,25 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Alamofire: 01a82e2f6c0f860ade35534c8dd88be61bdef40c
+  AWSAutoScaling: 5da3636051c3c407696bc85918b74160c938ba8a
+  AWSCloudWatch: b1662c2889e3d7edcfe68e156d87f235becd86b7
+  AWSCognito: 96e1762404831ffb87f67c87a5ee68fde543bb69
+  AWSCognitoIdentityProvider: 3085d7d30b2bead2dc97efe286e02bda1a6a8325
+  AWSCore: 2f356385bcea9b81ea47f9be0228c71697d9597d
+  AWSDynamoDB: 284308e0f5164aa8178dd06505410390deb44a49
+  AWSEC2: 103802d5499bc5e710940beb1e518b198413b919
+  AWSElasticLoadBalancing: 81648d2eabe1f99a6ed4f50dd387db7462c5e618
+  AWSIoT: ac58a75a14a61259dd10ecda782df8ad34d5e29a
+  AWSKinesis: fa2b1dc658295c1b4ee246a0f684dcaab078d585
+  AWSLambda: 295ed268e30556aa55b13b01495a1d47593af178
+  AWSMachineLearning: 99e0349153c17b61848bb47da07d6f9a20602aea
+  AWSMobileAnalytics: 8546db78fa7f3ff66099902199fed47c68f148e3
+  AWSS3: 8f73b439f12c4aaaea39fbec87f67a1f1e15bd42
+  AWSSES: 3f11397d923357c81fdced1bf8028a6f42e31508
+  AWSSimpleDB: c7f91fdd299ca58f222ee95e89a27022cd47ada1
+  AWSSNS: aaf565330d8f2f7c4f2cb13d2a20bceae8259f2f
+  AWSSQS: 8026703bf7cbe8ea1728f95f358f7cb4536e5040
 
-PODFILE CHECKSUM: 4f5c3f9a659d3a09a1f06aa2018be8cfc0ff61cf
+PODFILE CHECKSUM: e099819d188ab541a24a77f08021d83ac275ce69
 
 COCOAPODS: 1.0.1
