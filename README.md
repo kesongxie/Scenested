@@ -10,7 +10,7 @@
 <div>
  <img align="left" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5528.jpg" width="200" />
   <img align="center" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5368.jpg" width="200" />
-  <img align="center" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5357.jpg" width="200" />
+  <img align="right" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5357.jpg" width="200" />
   
 
 </div>
