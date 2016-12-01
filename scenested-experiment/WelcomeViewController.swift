@@ -42,6 +42,7 @@ class WelcomeViewController: UIViewController {
         
         //AWSIdentityProviderManager
         if let token = FBSDKAccessToken.currentAccessToken()?.tokenString{
+            /*
             let customProviderManager = CredentialProvider(tokens: [AWSIdentityProviderFacebook: token])
             let credentialsProvider = AWSCognitoCredentialsProvider(
                 regionType: .USEast1,
@@ -74,7 +75,7 @@ class WelcomeViewController: UIViewController {
                         return nil
                     }
                 return nil
-            })
+            })*/
         }
     }
     
@@ -89,6 +90,7 @@ class WelcomeViewController: UIViewController {
             guard let user = user as? [String: AnyObject] else{
                 return
             }
+            print(user)
             
         })
     }
@@ -117,11 +119,12 @@ class WelcomeViewController: UIViewController {
 
 extension WelcomeViewController: FBSDKLoginButtonDelegate{
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-//        if error != nil{
-//            print("canceled")
-//            return
-//        }
-//        fetchProfile()
+        if error != nil{
+            print("canceled")
+            return
+        }
+        //navigate to profile page scene
+        fetchProfile()
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
