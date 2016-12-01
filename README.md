@@ -21,7 +21,7 @@
 
 <div>
    <img align="left" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5426.jpg" width="300" />
-   <img align="center" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5375.jpg" width="300" />
+   <img align="center" src="https://github.com/kesongxie/Scenested-App/blob/master/scenested-experiment/App%20Demo/IMG_5389.jpg" width="300" />
 </div>
 </br>
 
